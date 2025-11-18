@@ -125,6 +125,10 @@ function replacePlaceholders(body, values) {
     values.forEach(value => {
         output = output.replace('XXX', value || '');
     });
+    const attendantName = sessionStorage.getItem('userName') || '';
+    if (attendantName) {
+        output = output.replace(/nome_atendente/gi, attendantName);
+    }
     return output;
 }
 
@@ -136,6 +140,7 @@ function openFillTermModal(term) {
     const names = term.variables && term.variables.length ? term.variables : Array.from({ length: placeholderCount }, (_, i) => `Variavel ${i + 1}`);
 
     fillTermFields.innerHTML = '';
+    const attendantName = sessionStorage.getItem('userName') || '';
     names.forEach((name, index) => {
         const wrapper = document.createElement('div');
         wrapper.className = 'form-group';
@@ -146,6 +151,10 @@ function openFillTermModal(term) {
         input.type = 'text';
         input.id = `term-var-${index}`;
         input.required = true;
+        // Preenche automaticamente quando a variavel for "nome_atendente"
+        if (name.replace(/\s+/g, '').toLowerCase() === 'nome_atendente' && attendantName) {
+            input.value = attendantName;
+        }
         wrapper.appendChild(label);
         wrapper.appendChild(input);
         fillTermFields.appendChild(wrapper);
@@ -210,7 +219,7 @@ function setupSharedTermModals() {
 // Pagina do usuario
 // =========================
 export function initTermsModule() {
-    if (document.querySelector('.admin-dashboard') || !document.getElementById('ferramentas-section')) return;
+    if (document.querySelector('.admin-dashboard') || !document.getElementById('termos-section')) return;
 
     document.addEventListener('termsUpdated', () => renderTermList());
     renderTermList();

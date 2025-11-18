@@ -20,6 +20,7 @@
         <button id="sync-btn" class="btn"><i class="fas fa-sync"></i> Sincronizar <span id="local-scripts-count" class="badge">0</span></button>
         <button id="add-term-btn" class="btn btn-secondary"><i class="fas fa-plus"></i> Add Termo</button>
         <button id="add-script-btn" class="btn"><i class="fas fa-plus"></i> Add Script</button>
+        <button id="add-user-btn" class="btn btn-secondary"><i class="fas fa-user-plus"></i> Add Login</button>
     </div>
     <div class="header-profile">
         <span>Admin</span>
@@ -71,6 +72,26 @@
                 </table>
             </div>
         </div>
+
+        <div class="dashboard-widget widget-table">
+            <div class="widget-header">
+                <h2><i class="fas fa-user-shield"></i> Gerenciar Logins</h2>
+                <input type="search" id="admin-search-users" placeholder="Buscar logins...">
+            </div>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Usuário</th>
+                            <th>Papel</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-table-body"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
     <aside class="dashboard-side-col">
@@ -91,6 +112,10 @@
                     <div class="stat-item">
                         <span class="stat-value" id="stats-terms-total">...</span>
                         <span class="stat-label">Termos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="stats-users-total">...</span>
+                        <span class="stat-label">Logins</span>
                     </div>
                 </div>
             </div>
@@ -191,6 +216,37 @@
             <div class="form-actions">
                 <button type="button" id="cancel-term-btn" class="btn btn-secondary">Cancelar</button>
                 <button type="submit" class="btn">Salvar Termo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="add-user-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="user-modal-title">Adicionar Login</h2>
+        <form id="add-user-form">
+            <div class="form-group">
+                <label for="user-display-name">Nome do atendente</label>
+                <input type="text" id="user-display-name" required>
+            </div>
+            <div class="form-group">
+                <label for="user-username">Usuário</label>
+                <input type="text" id="user-username" required>
+            </div>
+            <div class="form-group">
+                <label for="user-password">Senha</label>
+                <input type="text" id="user-password" required>
+            </div>
+            <div class="form-group">
+                <label for="user-role">Papel</label>
+                <select id="user-role">
+                    <option value="user">Usuário</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-user-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Salvar Login</button>
             </div>
         </form>
     </div>

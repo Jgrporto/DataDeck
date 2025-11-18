@@ -1,8 +1,9 @@
 import { checkAuth } from './auth.js';
-import { setupListeners, getScriptsForView, getTermsForView, importScriptsLocally, importTermsLocally } from './state.js';
+import { setupListeners, getScriptsForView, getTermsForView, getUsersForView, importScriptsLocally, importTermsLocally, importUsersLocally } from './state.js';
 import { initAdminScriptsModule } from './modules/scripts.js';
 import { initAdminTermsModule } from './modules/terms.js';
 import { initAdminSettingsModule } from './modules/settings.js';
+import { initAdminUsersModule } from './modules/users.js';
 
 checkAuth();
 
@@ -10,9 +11,11 @@ function updateStats() {
     const statsCloudScriptsEl = document.getElementById('stats-cloud-scripts');
     const statsLocalScriptsEl = document.getElementById('stats-local-scripts');
     const statsTermsTotalEl = document.getElementById('stats-terms-total');
+    const statsUsersTotalEl = document.getElementById('stats-users-total');
 
     const allScripts = getScriptsForView();
     const allTerms = getTermsForView();
+    const allUsers = getUsersForView();
 
     const localScriptsCount = allScripts.filter(s => String(s.id).startsWith('local_')).length;
     const cloudScriptsCount = allScripts.length - localScriptsCount;
@@ -20,6 +23,7 @@ function updateStats() {
     if (statsCloudScriptsEl) statsCloudScriptsEl.textContent = cloudScriptsCount;
     if (statsLocalScriptsEl) statsLocalScriptsEl.textContent = localScriptsCount;
     if (statsTermsTotalEl) statsTermsTotalEl.textContent = allTerms.length;
+    if (statsUsersTotalEl) statsUsersTotalEl.textContent = allUsers.length;
 }
 
 function setupLogout() {
@@ -51,6 +55,7 @@ function setupUniversalImporter() {
                     const data = JSON.parse(e.target.result);
                     let scriptsFound = 0;
                     let termsFound = 0;
+                    let usersFound = 0;
 
                     if (data.scripts && Array.isArray(data.scripts)) {
                         importScriptsLocally(data.scripts);
@@ -62,7 +67,13 @@ function setupUniversalImporter() {
                         termsFound = data.terms.length;
                     }
 
-                    alert(`Importacao concluida!\n- ${scriptsFound} scripts adicionados localmente.\n- ${termsFound} termos adicionados localmente.\n\nUse o botao "Sincronizar" para envia-los para a nuvem.`);
+                    // Verifica e importa USERS
+                    if (data.users && Array.isArray(data.users)) {
+                        importUsersLocally(data.users);
+                        usersFound = data.users.length;
+                    }
+
+                    alert(`Importacao concluida!\n- ${scriptsFound} scripts adicionados localmente.\n- ${termsFound} termos adicionados localmente.\n- ${usersFound} logins adicionados localmente.\n\nUse o botao "Sincronizar" para envia-los para a nuvem.`);
 
                 } catch (error) {
                     alert('Erro ao ler o arquivo. Verifique se e um arquivo .json valido.');
@@ -79,12 +90,14 @@ document.addEventListener('DOMContentLoaded', () => {
     initAdminScriptsModule();
     initAdminTermsModule();
     initAdminSettingsModule();
+    initAdminUsersModule();
     
     setupLogout();
     setupUniversalImporter();
 
     document.addEventListener('scriptsUpdated', updateStats);
     document.addEventListener('termsUpdated', updateStats);
+    document.addEventListener('usersUpdated', updateStats);
     
     setupListeners();
 });

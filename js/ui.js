@@ -1,6 +1,6 @@
 /* CÓDIGO FINAL PARA: js/ui.js */
 
-import { navScripts, navAnalise, navFerramentas, pageSections } from './dom.js';
+import { navScripts, navAnalise, navTermos, pageSections } from './dom.js';
 
 function showUserPage(pageId) {
     if (!pageSections) return;
@@ -11,7 +11,7 @@ function showUserPage(pageId) {
     const activePage = document.getElementById(pageId);
     if (activePage) activePage.style.display = 'block';
     
-    const navLinks = [navScripts, navAnalise, navFerramentas];
+    const navLinks = [navScripts, navAnalise, navTermos];
     navLinks.forEach(link => {
         if (link) link.classList.remove('active-link');
     });
@@ -23,8 +23,8 @@ function showUserPage(pageId) {
         case 'analise-section':
             if (navAnalise) navAnalise.classList.add('active-link');
             break;
-        case 'ferramentas-section':
-            if (navFerramentas) navFerramentas.classList.add('active-link');
+        case 'termos-section':
+            if (navTermos) navTermos.classList.add('active-link');
             break;
     }
 }
@@ -34,7 +34,7 @@ export function initUserInterface() {
 
     if (navScripts) navScripts.addEventListener('click', (e) => { e.preventDefault(); showUserPage('script-library'); });
     if (navAnalise) navAnalise.addEventListener('click', (e) => { e.preventDefault(); showUserPage('analise-section'); });
-    if (navFerramentas) navFerramentas.addEventListener('click', (e) => { e.preventDefault(); showUserPage('ferramentas-section'); });
+    if (navTermos) navTermos.addEventListener('click', (e) => { e.preventDefault(); showUserPage('termos-section'); });
 
     showUserPage('script-library');
 }

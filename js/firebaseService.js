@@ -60,6 +60,16 @@ export function listenForTerms(callback) {
 }
 
 /**
+ * Escuta por mudancas em tempo real na colecao de usuarios (logins).
+ */
+export function listenForUsers(callback) {
+    db.collection('users').onSnapshot(snapshot => {
+        const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        callback(users);
+    });
+}
+
+/**
  * Escuta por mudanças em tempo real no documento de anotações.
  */
 export function listenForNotes(callback) {
@@ -109,6 +119,24 @@ export async function updateTermInDB(termId, termData) {
 }
 export async function deleteTermFromDB(termId) {
     await db.collection('terms').doc(termId).delete();
+}
+
+// Funcoes para USUARIOS
+export async function saveUserInDB(userData) {
+    const docRef = await db.collection('users').add(userData);
+    return docRef.id;
+}
+export async function updateUserInDB(userId, userData) {
+    await db.collection('users').doc(userId).update(userData);
+}
+export async function deleteUserFromDB(userId) {
+    await db.collection('users').doc(userId).delete();
+}
+
+// Consulta unica para autenticar
+export async function getUsersForAuth() {
+    const snapshot = await db.collection('users').get();
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
 // Funções para ANOTAÇÕES

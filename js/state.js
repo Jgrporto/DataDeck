@@ -6,6 +6,7 @@ import * as firebaseService from './firebaseService.js';
 let scriptsData = [];
 let toolsData = [];
 let termsData = [];
+let usersData = [];
 let anotacoesData = '';
 
 // --- Funções Auxiliares para o localStorage ---
@@ -21,6 +22,7 @@ function saveLocalData(key, data) {
 export const getScriptsForView = () => [...scriptsData, ...getLocalData('local_scripts')];
 export const getToolsForView = () => [...toolsData, ...getLocalData('local_tools')];
 export const getTermsForView = () => [...termsData, ...getLocalData('local_terms')];
+export const getUsersForView = () => [...usersData, ...getLocalData('local_users')];
 export const getAnotacoes = () => anotacoesData;
 
 // --- Função de Setup dos Listeners ---
@@ -36,6 +38,10 @@ export function setupListeners() {
     firebaseService.listenForTerms(newTerms => {
         termsData = newTerms;
         document.dispatchEvent(new Event('termsUpdated'));
+    });
+    firebaseService.listenForUsers(newUsers => {
+        usersData = newUsers;
+        document.dispatchEvent(new Event('usersUpdated'));
     });
     firebaseService.listenForNotes(newNotes => {
         anotacoesData = newNotes;
@@ -67,6 +73,13 @@ function addTermLocally(termObject) {
     saveLocalData('local_terms', localTerms);
     document.dispatchEvent(new Event('termsUpdated'));
 }
+function addUserLocally(userObject) {
+    const localUsers = getLocalData('local_users');
+    const newLocalUser = { ...userObject, id: `local_${Date.now()}` };
+    localUsers.push(newLocalUser);
+    saveLocalData('local_users', localUsers);
+    document.dispatchEvent(new Event('usersUpdated'));
+}
 
 // --- Funções de Adição (Agora sempre locais) ---
 export async function addScript(scriptObject) {
@@ -77,6 +90,9 @@ export async function addTool(toolObject) {
 }
 export async function addTerm(termObject) {
     addTermLocally(termObject);
+}
+export async function addUser(userObject) {
+    addUserLocally(userObject);
 }
 
 // --- Função de Importação (Sempre local) ---
@@ -133,6 +149,23 @@ export function importTermsLocally(termsToImport) {
     saveLocalData('local_terms', localTerms);
     document.dispatchEvent(new Event('termsUpdated'));
 }
+export function importUsersLocally(usersToImport) {
+    const localUsers = getLocalData('local_users');
+    const timestamp = Date.now();
+    usersToImport.forEach((user, index) => {
+        const newLocalUser = {
+            displayName: user.displayName || 'Usuário',
+            username: user.username || `user${timestamp}_${index}`,
+            password: user.password || '',
+            role: user.role || 'user',
+            isDeletable: true,
+            id: `local_${timestamp}_${index}`
+        };
+        localUsers.push(newLocalUser);
+    });
+    saveLocalData('local_users', localUsers);
+    document.dispatchEvent(new Event('usersUpdated'));
+}
 
 // --- Funções de Update (Inteligentes) ---
 export async function updateScript(scriptId, scriptObject) {
@@ -175,6 +208,19 @@ export async function updateTerm(termId, termObject) {
         await firebaseService.updateTermInDB(termId, termObject);
     }
 }
+export async function updateUser(userId, userObject) {
+    if (String(userId).startsWith('local_')) {
+        const localUsers = getLocalData('local_users');
+        const index = localUsers.findIndex(u => u.id === userId);
+        if (index !== -1) {
+            localUsers[index] = { ...localUsers[index], ...userObject };
+            saveLocalData('local_users', localUsers);
+            document.dispatchEvent(new Event('usersUpdated'));
+        }
+    } else {
+        await firebaseService.updateUserInDB(userId, userObject);
+    }
+}
 
 // --- Funções de Deleção (Inteligentes) ---
 export async function deleteScript(scriptId) {
@@ -208,6 +254,16 @@ export async function deleteTerm(termId) {
         await firebaseService.deleteTermFromDB(termId);
     }
 }
+export async function deleteUser(userId) {
+    if (String(userId).startsWith('local_')) {
+        let localUsers = getLocalData('local_users');
+        localUsers = localUsers.filter(u => u.id !== userId);
+        saveLocalData('local_users', localUsers);
+        document.dispatchEvent(new Event('usersUpdated'));
+    } else {
+        await firebaseService.deleteUserFromDB(userId);
+    }
+}
 
 // --- Funções de Anotações e Sincronização ---
 export async function saveAnotacoes(notes) {
@@ -218,6 +274,7 @@ export async function syncLocalDataToFirebase() {
     const localScripts = getLocalData('local_scripts');
     const localTools = getLocalData('local_tools');
     const localTerms = getLocalData('local_terms');
+    const localUsers = getLocalData('local_users');
     let itemsSynced = 0;
 
     // Envia todos os scripts locais para o Firebase
@@ -237,17 +294,24 @@ export async function syncLocalDataToFirebase() {
         await firebaseService.saveTermInDB(termData);
         itemsSynced++;
     }
+    for (const user of localUsers) {
+        const { id, ...userData } = user;
+        await firebaseService.saveUserInDB(userData);
+        itemsSynced++;
+    }
 
     if (itemsSynced > 0) {
         localStorage.removeItem('local_scripts');
         localStorage.removeItem('local_tools');
         localStorage.removeItem('local_terms');
+        localStorage.removeItem('local_users');
 
         // AVISA A INTERFACE QUE A LISTA LOCAL MUDOU (FICOU VAZIA)
         // Isso força o redesenho da tabela e das estatísticas.
         document.dispatchEvent(new Event('scriptsUpdated'));
         document.dispatchEvent(new Event('toolsUpdated'));
         document.dispatchEvent(new Event('termsUpdated'));
+        document.dispatchEvent(new Event('usersUpdated'));
     }
     return itemsSynced;
 }

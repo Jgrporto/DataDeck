@@ -2,7 +2,7 @@
    STYLE.CSS FINAL E OTIMIZADO - TEMA "CLARITY"
    =================================================== */
 
-/* --- 1. FUNDAÇÃO: Variáveis, Fontes e Estilos Globais --- */
+/* --- 1. FUNDAÃ‡ÃƒO: VariÃ¡veis, Fontes e Estilos Globais --- */
 :root, [data-theme="light"] {
     --cor-fundo: #f8f9fa;
     --cor-surface: #ffffff;
@@ -40,16 +40,16 @@ body {
 
 /* --- 2. LAYOUT GERAL E NAVBAR --- */
 
-/* Adiciona um espaço no topo do body para a navbar flutuante não cobrir o conteúdo */
+/* Adiciona um espaÃ§o no topo do body para a navbar flutuante nÃ£o cobrir o conteÃºdo */
 body {
     padding-top: 100px;
 }
 
-/* O header agora é fixo e flutuante */
+/* O header agora Ã© fixo e flutuante */
 header.floating-header {
     background: var(--cor-surface);
     padding: 12px;
-    border-radius: 50px; /* Bordas bem arredondadas para um visual de pílula */
+    border-radius: 50px; /* Bordas bem arredondadas para um visual de pÃ­lula */
     box-shadow: var(--sombra-suave);
     border: 1px solid var(--cor-borda);
     display: flex;
@@ -61,7 +61,7 @@ header.floating-header {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: auto; /* A largura se ajusta ao conteúdo */
+    width: auto; /* A largura se ajusta ao conteÃºdo */
     z-index: 1000;
 }
 
@@ -70,7 +70,7 @@ header.floating-header .site-title {
     font-weight: 600;
     color: var(--cor-texto-principal);
     padding: 0 10px 0 20px;
-    white-space: nowrap; /* Impede que o título quebre linha */
+    white-space: nowrap; /* Impede que o tÃ­tulo quebre linha */
 }
 
 header.floating-header .profile-button {
@@ -90,14 +90,14 @@ header.floating-header .profile-button img {
     display: block;
 }
 
-/* O container da navegação interativa */
+/* O container da navegaÃ§Ã£o interativa */
 .interactive-nav {
     display: flex;
     align-items: center;
     transition: all 0.4s ease;
 }
 
-/* Estilo de cada link/botão de navegação */
+/* Estilo de cada link/botÃ£o de navegaÃ§Ã£o */
 .nav-link {
     display: flex;
     align-items: center;
@@ -106,14 +106,14 @@ header.floating-header .profile-button img {
     overflow: hidden;
     color: var(--cor-texto-secundario);
     
-    /* Estado Padrão (Recolhido) */
+    /* Estado PadrÃ£o (Recolhido) */
     width: 50px;
     height: 50px;
     border-radius: 50%;
     background-color: transparent;
     margin: 0 5px;
     
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animação mais suave */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* AnimaÃ§Ã£o mais suave */
 }
 
 .nav-icon {
@@ -127,12 +127,12 @@ header.floating-header .profile-button img {
     white-space: nowrap;
     opacity: 0;
     font-size: 16px;
-    position: absolute; /* Permite que ele não ocupe espaço quando escondido */
+    position: absolute; /* Permite que ele nÃ£o ocupe espaÃ§o quando escondido */
     transform: translateY(10px);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* --- ESTADO HOVER (Quando o mouse está sobre a NAV inteira) --- */
+/* --- ESTADO HOVER (Quando o mouse estÃ¡ sobre a NAV inteira) --- */
 
 .interactive-nav:hover .nav-link {
     width: 140px;
@@ -164,12 +164,12 @@ header.floating-header .profile-button img {
 }
 
 .interactive-nav:hover .nav-link.active-link .nav-icon {
-    color: white; /* Cor do ícone no estado ativo e hover (embora ele suma) */
+    color: white; /* Cor do Ã­cone no estado ativo e hover (embora ele suma) */
 }
 
-/* --- 3. COMPONENTES GERAIS REUTILIZÁVEIS --- */
+/* --- 3. COMPONENTES GERAIS REUTILIZÃVEIS --- */
 
-/* Estilo Base dos Botões */
+/* Estilo Base dos BotÃµes */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -194,7 +194,7 @@ header.floating-header .profile-button img {
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-/* Variação de Botão Secundário (cinza) */
+/* VariaÃ§Ã£o de BotÃ£o SecundÃ¡rio (cinza) */
 .btn-secondary {
     background-color: var(--cor-surface);
     color: var(--cor-texto-secundario);
@@ -207,7 +207,7 @@ header.floating-header .profile-button img {
     color: var(--cor-texto-principal);
 }
 
-/* Variação de Botão de Perigo (vermelho) */
+/* VariaÃ§Ã£o de BotÃ£o de Perigo (vermelho) */
 .btn-danger {
     background-color: #dc3545;
 }
@@ -300,7 +300,7 @@ header.floating-header .profile-button img {
     justify-content: flex-end;
 }
 
-/* --- 4. ESTILOS DAS PÁGINAS ESPECÍFICAS --- */
+/* --- 4. ESTILOS DAS PÃGINAS ESPECÃFICAS --- */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -315,9 +315,9 @@ header.floating-header .profile-button img {
     font-weight: 700;
 }
 
-/* --- 4.2 - Página: Biblioteca de Scripts --- */
+/* --- 4.2 - PÃ¡gina: Biblioteca de Scripts --- */
 
-/* Layout principal da página de scripts com duas colunas */
+/* Layout principal da pÃ¡gina de scripts com duas colunas */
 .scripts-section {
     display: grid;
     grid-template-columns: 350px 1fr; /* Coluna da lista com 350px de largura */
@@ -325,7 +325,7 @@ header.floating-header .profile-button img {
     height: calc(100vh - 160px); /* Altura da tela menos header e paddings */
 }
 
-/* Estilo da coluna da esquerda, que contém a lista */
+/* Estilo da coluna da esquerda, que contÃ©m a lista */
 .scripts-list {
     background-color: var(--cor-surface);
     border: 1px solid var(--cor-borda);
@@ -333,10 +333,10 @@ header.floating-header .profile-button img {
     padding: 10px;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Garante que o conteúdo interno não vaze */
+    overflow: hidden; /* Garante que o conteÃºdo interno nÃ£o vaze */
 }
 
-/* Cabeçalho dentro da coluna da lista */
+/* CabeÃ§alho dentro da coluna da lista */
 .scripts-list-header {
     padding-bottom: 15px;
     margin-bottom: 15px;
@@ -372,17 +372,17 @@ header.floating-header .profile-button img {
     font-size: 14px;
 }
 
-/* A lista <ul> que conterá os cards de script */
+/* A lista <ul> que conterÃ¡ os cards de script */
 #script-list-ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: auto; /* Adiciona rolagem interna apenas à lista */
-    flex-grow: 1; /* Faz a lista ocupar todo o espaço vertical restante */
-    padding-right: 5px; /* Espaço para a barra de rolagem */
+    overflow-y: auto; /* Adiciona rolagem interna apenas Ã  lista */
+    flex-grow: 1; /* Faz a lista ocupar todo o espaÃ§o vertical restante */
+    padding-right: 5px; /* EspaÃ§o para a barra de rolagem */
 }
 
-/* Estilos da coluna da direita, que exibe o conteúdo do script */
+/* Estilos da coluna da direita, que exibe o conteÃºdo do script */
 .script-content {
     background-color: var(--cor-surface);
     border: 1px solid var(--cor-borda);
@@ -423,7 +423,7 @@ header.floating-header .profile-button img {
 }
 
 #script-display pre {
-    background-color: #282c34; /* Fundo escuro padrão para código */
+    background-color: #282c34; /* Fundo escuro padrÃ£o para cÃ³digo */
     color: #abb2bf;
     padding: 20px;
     border-radius: 8px;
@@ -480,11 +480,11 @@ header.floating-header .profile-button img {
     color: var(--cor-texto-principal);
     display: block;
     margin-bottom: 8px;
-    padding-left: 30px; /* Adiciona um recuo para o ícone não sobrepor o texto */
+    padding-left: 30px; /* Adiciona um recuo para o Ã­cone nÃ£o sobrepor o texto */
     position: relative;
 }
 
-/* Descrição dentro do card */
+/* DescriÃ§Ã£o dentro do card */
 .script-item-description {
     font-size: 14px;
     color: var(--cor-texto-secundario);
@@ -495,12 +495,12 @@ header.floating-header .profile-button img {
     overflow: hidden;
 }
 
-/* Botão de favorito no canto do card */
+/* BotÃ£o de favorito no canto do card */
 .script-item .favorite-btn {
     position: absolute;
-    top: 22px;  /* Ajusta a altura para alinhar com o título */
+    top: 22px;  /* Ajusta a altura para alinhar com o tÃ­tulo */
     left: 20px; /* Move para a esquerda */
-    z-index: 5; /* Garante que fique sobre o conteúdo se necessário */
+    z-index: 5; /* Garante que fique sobre o conteÃºdo se necessÃ¡rio */
     display: inline-block;
     opacity: 0.3;
     transition: color 0.2s, transform 0.2s, opacity 0.2s;
@@ -526,7 +526,7 @@ header.floating-header .profile-button img {
     color: #f1c40f;
 }
 
-/* Container para os botões de Editar/Apagar nos itens locais */
+/* Container para os botÃµes de Editar/Apagar nos itens locais */
 .script-item-actions {
     position: absolute;
     bottom: 15px;
@@ -535,7 +535,7 @@ header.floating-header .profile-button img {
     gap: 10px;
 }
 
-/* Estilo dos botões de Editar/Apagar */
+/* Estilo dos botÃµes de Editar/Apagar */
 .script-item .edit-btn,
 .script-item .delete-btn {
     background-color: var(--cor-surface);
@@ -554,7 +554,7 @@ header.floating-header .profile-button img {
     pointer-events: none;
 }
 
-/* Efeito de hover no card para mostrar os botões */
+/* Efeito de hover no card para mostrar os botÃµes */
 .script-item:hover .edit-btn,
 .script-item:hover .delete-btn {
     opacity: 1;
@@ -562,7 +562,7 @@ header.floating-header .profile-button img {
     pointer-events: all;
 }
 
-/* Efeitos de hover nos próprios botões */
+/* Efeitos de hover nos prÃ³prios botÃµes */
 .script-item .edit-btn:hover {
     background-color: var(--cor-destaque);
     color: white;
@@ -575,16 +575,16 @@ header.floating-header .profile-button img {
     border-color: var(--cor-erro);
 }
 
-/* --- 4.3 - Página: Ferramentas --- */
+/* --- 4.3 - PÃ¡gina: Ferramentas --- */
 .tools-grid {
     display: grid;
-    /* Cria colunas automáticas com tamanho mínimo de 300px */
+    /* Cria colunas automÃ¡ticas com tamanho mÃ­nimo de 300px */
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 25px;
 }
 
 .tools-grid h2 {
-    grid-column: 1 / -1; /* Faz o título ocupar a linha inteira da grade */
+    grid-column: 1 / -1; /* Faz o tÃ­tulo ocupar a linha inteira da grade */
     font-size: 20px;
     font-weight: 600;
     margin-top: 20px;
@@ -635,7 +635,128 @@ header.floating-header .profile-button img {
 }
 
 
-/* --- 4.4 - Página: Análise de Desconto --- */
+/* --- 4.3b - Pagina: Termos --- */
+.terms-layout {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 24px;
+    align-items: start;
+}
+
+.terms-list-panel,
+.term-output-panel {
+    background: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    border-radius: 10px;
+    padding: 22px;
+    box-shadow: var(--sombra-suave);
+}
+
+.terms-list-panel .input-group {
+    margin-bottom: 14px;
+}
+
+.terms-list-panel input[type="search"] {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background: var(--cor-bg);
+    color: var(--cor-texto-principal);
+}
+
+.term-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.term-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 14px 16px;
+    background: var(--cor-surface);
+    transition: all 0.15s ease-in-out;
+}
+
+.term-item:hover {
+    border-color: var(--cor-destaque);
+    box-shadow: var(--sombra-suave);
+    transform: translateY(-2px);
+}
+
+.term-info {
+    flex: 1 1 200px;
+}
+
+.term-info strong {
+    display: block;
+    color: var(--cor-texto-principal);
+    margin-bottom: 4px;
+}
+
+.term-info small {
+    color: var(--cor-texto-secundario);
+}
+
+.term-actions {
+    display: flex;
+    gap: 8px;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.btn.btn-small {
+    padding: 6px 12px;
+    font-size: 13px;
+    line-height: 1.3;
+}
+
+.term-output-panel h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+}
+
+.term-output {
+    width: 100%;
+    min-height: 200px;
+    resize: vertical;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--cor-bg);
+    color: var(--cor-texto-principal);
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin-bottom: 12px;
+}
+
+.term-copy-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+@media (max-width: 992px) {
+    .terms-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* --- 4.4 - PÃ¡gina: AnÃ¡lise de Desconto --- */
 .analise-layout {
     display: grid;
     grid-template-columns: 380px 1fr;
@@ -650,7 +771,7 @@ header.floating-header .profile-button img {
     padding: 25px;
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* Garante que o conteúdo não vaze */
+    overflow: hidden; /* Garante que o conteÃºdo nÃ£o vaze */
 }
 
 .texto-fixo-coluna h2, .iframe-coluna h2 {
@@ -660,7 +781,7 @@ header.floating-header .profile-button img {
 }
 
 #anotacoes-textarea {
-    flex-grow: 1; /* Ocupa o espaço vertical */
+    flex-grow: 1; /* Ocupa o espaÃ§o vertical */
     width: 100%;
     box-sizing: border-box;
     resize: none;
@@ -692,12 +813,12 @@ header.floating-header .profile-button img {
     border-radius: 6px;
 }
 
-/* --- 5. PAINEL DE PERFIL E CONFIGURAÇÕES (LATERAL) --- */
+/* --- 5. PAINEL DE PERFIL E CONFIGURAÃ‡Ã•ES (LATERAL) --- */
 
 .settings-panel {
     position: fixed;
     top: 0;
-    right: -360px; /* Começa fora da tela */
+    right: -360px; /* ComeÃ§a fora da tela */
     width: 340px;
     height: 100%;
     background-color: var(--cor-surface);
@@ -743,7 +864,7 @@ header.floating-header .profile-button img {
     flex-grow: 1;
 }
 
-/* Estilos para a nova seção de perfil */
+/* Estilos para a nova seÃ§Ã£o de perfil */
 .profile-header {
     display: flex;
     flex-direction: column;
@@ -787,7 +908,7 @@ header.floating-header .profile-button img {
     margin: 0;
 }
 
-/* Estilos para os grupos de configurações */
+/* Estilos para os grupos de configuraÃ§Ãµes */
 .setting-group {
     margin-bottom: 25px;
 }
@@ -870,32 +991,32 @@ header.floating-header .profile-button img {
 }
 
 
-/* --- 7. CLASSES UTILITÁRIAS --- */
+/* --- 7. CLASSES UTILITÃRIAS --- */
 
 .hidden {
     display: none !important;
 }
 
 /* ===================================================
-   Técnica Universal para Ocultar a Barra de Rolagem
+   TÃ©cnica Universal para Ocultar a Barra de Rolagem
    =================================================== */
 
-/* 1. O container-pai: ele define a área visível e esconde o que transborda. */
+/* 1. O container-pai: ele define a Ã¡rea visÃ­vel e esconde o que transborda. */
 .scroll-wrapper {
-    overflow: hidden; /* Esconde a barra de rolagem que está "fora" */
-    flex-grow: 1;     /* Faz ele ocupar o espaço vertical restante */
+    overflow: hidden; /* Esconde a barra de rolagem que estÃ¡ "fora" */
+    flex-grow: 1;     /* Faz ele ocupar o espaÃ§o vertical restante */
     position: relative; /* Contexto para a lista interna */
 }
 
-/* 2. A lista interna: ela é mais larga e contém a barra de rolagem. */
+/* 2. A lista interna: ela Ã© mais larga e contÃ©m a barra de rolagem. */
 #script-list-ul {
     list-style: none;
     padding: 0;
     margin: 0;
-    overflow-y: scroll; /* FORÇA a barra de rolagem a existir */
+    overflow-y: scroll; /* FORÃ‡A a barra de rolagem a existir */
 
-    /* O TRUQUE: O padding à direita cria espaço, o margin negativo empurra esse espaço 
-       (junto com a barra de rolagem) para fora da área visível do .scroll-wrapper. */
+    /* O TRUQUE: O padding Ã  direita cria espaÃ§o, o margin negativo empurra esse espaÃ§o 
+       (junto com a barra de rolagem) para fora da Ã¡rea visÃ­vel do .scroll-wrapper. */
     padding-right: 20px; 
     margin-right: -20px;
     
@@ -904,7 +1025,7 @@ header.floating-header .profile-button img {
 }
 
 /* ========================================================
-   Ocultar a Barra de Rolagem do PAINEL DE CONTEÚDO do Script
+   Ocultar a Barra de Rolagem do PAINEL DE CONTEÃšDO do Script
    ======================================================== */
 
 .script-content {
@@ -933,7 +1054,7 @@ header.floating-header .profile-button img {
     flex-shrink: 0; /* Impede que o switch encolha em layouts flex */
 }
 
-/* Esconde o checkbox padrão do HTML */
+/* Esconde o checkbox padrÃ£o do HTML */
 .switch input { 
     opacity: 0;
     width: 0;
@@ -964,7 +1085,7 @@ header.floating-header .profile-button img {
     transition: .4s;
 }
 
-/* Estilos para quando o interruptor está LIGADO */
+/* Estilos para quando o interruptor estÃ¡ LIGADO */
 input:checked + .slider {
     background-color: var(--cor-destaque);
 }
