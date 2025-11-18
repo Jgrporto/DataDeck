@@ -1,0 +1,115 @@
+/* ===================================================
+   CSS COMPLETO E DEDICADO PARA A PÁGINA DE LOGIN
+   =================================================== */
+
+/* --- 1. Variáveis de Tema --- */
+:root {
+    --cor-fundo: #f8f9fa;
+    --cor-surface: #ffffff;
+    --cor-borda: #dee2e6;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6c757d;
+    --cor-destaque: #0d6efd;
+    --cor-destaque-hover: #0b5ed7;
+    --cor-erro: #e74c3c;
+    --sombra-suave: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+/* (Você pode adicionar uma paleta de modo escuro aqui se quiser no futuro) */
+
+
+/* --- 2. Estilo da Página (Centralização) --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    margin: 0;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+}
+
+/* --- 3. Card de Login --- */
+.login-card {
+    background-color: var(--cor-surface);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--cor-borda);
+    width: 450px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* --- 4. Ilustração --- */
+.illustration-container {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background-color: color-mix(in srgb, var(--cor-destaque) 10%, transparent);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+}
+.illustration-container img {
+    width: 45px;
+    height: 45px;
+    display: block;
+}
+
+/* --- 5. Textos e Formulário --- */
+.login-card h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+}
+.login-card p {
+    color: var(--cor-texto-secundario);
+    margin: 0 0 30px 0;
+    font-size: 15px;
+}
+.input-group { 
+    margin-bottom: 20px; 
+    text-align: left; 
+}
+.input-group label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: 500; 
+    font-size: 14px; 
+    color: var(--cor-texto-secundario);
+}
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+.input-group input:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-destaque) 20%, transparent);
+}
+.btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: var(--cor-destaque);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.btn:hover {
+    background-color: var(--cor-destaque-hover);
+}
+.error-message {
+    color: var(--cor-erro);
+    margin-top: 15px;
+    font-weight: 500;
+    font-size: 14px;
+    min-height: 1.2em;
+}

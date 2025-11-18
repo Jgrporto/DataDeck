@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="DataImages/DataDeck_icon.png" type="image/x-icon">
+    <title>DataDeck - Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="login-card">
+        <div class="illustration-container">
+            <img src="DataImages/DataDeck_icon.png" alt="Ilustração">
+        </div>
+        <h1>DataDeck</h1>
+        <p>Acesse sua central de scripts</p>
+        <form id="login-form">
+            <div class="input-group">
+                <label for="username">Usuário</label>
+                <input type="text" id="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+            <p id="error-message" class="error-message"></p>
+        </form>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

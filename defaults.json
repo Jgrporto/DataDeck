@@ -1,0 +1,78 @@
+{
+  "scripts": [{
+    "id": "script2",
+    "title": "Abertura de O.S",
+    "description": "Script padrão para realizar a abertura de uma ordem de serviço.",
+    "code": "NOME DA PESSOA QUE ENTROU EM CONTATO: xx\nRELATO DETALHADO DO CLIENTE: xxx\n\n>> CHECK LIST PREENCHIDA\n\n// CASO SEJA OS DE 24 HORAS/RETENÇÃO/REINCIDENCIA DESCREVER O MOTIVO, CASO O CONTRÁRIO APAGAR ESSA LINHA.\n\nTELEFONE DE CONTATO E ENDEREÇO CONFIRMADO\nCLIENTE CIENTE DO PRAZO DE [24/48] HORAS\nCLIENTE CIENTE DE POSSÍVEL TAXA DE VISITA IMPRODUTIVA NO VALOR DE R$ 50,00\nCLIENTE CIENTE DE RETORNO CASO NORMALIZE",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script3",
+    "title": "Abertura de Troca Equipamento",
+    "description": "Script padrão para realizar a abertura de uma ordem de serviço de troca de equipamento",
+    "code": "NOME DA PESSOA QUE ENTROU EM CONTATO: xx\nRELATO DETALHADO DO CLIENTE: xxx\n \nIDENTIFICADO EQUIPAMENTO EM COMODATO COM POSSIVEIS PROBLEMAS: *DESCREVER O PROBLEMA DO EQUIPAMENTO*\n\nTESTES REALIZADOS: xx\n\nTELEFONE DE CONTATO E ENDEREÇO CONFIRMADO\nCLIENTE CIENTE DO PRAZO DE 48H\nCLIENTE CIENTE DA POSSIBILIDADE DE SER GERADA TAXA REFERENTE AO DANO DO EQUIPAMENTO MEDIANTE ANÁLISE TÉCNICA\nCLIENTE CIENTE DE RETORNO CASO NORMALIZE",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script4",
+    "title": "O.S FTTH",
+    "description": "Script padrão para gerar ordem de serviço de manutenção da rede FTTH",
+    "code": "TESTES REALIZADOS\nONU OFFLINE NO SISTEMA\n[LOS VERMELHA / PON PISCANDO / LUZES APAGADAS - FEITA TROCA DE TOMADA SEM SUCESSO]\n\nOU\n\nTESTES REALIZADOS\nONU ONLINE NO SISTEMA, VERIFICADA E REAPROVISIONADA\nFEITO REBOOT E VERIFICADO OS CABOS\n[ROTEADOR DE PLATAFORMA CONFIGURADO / ROTEADOR PARTICULAR, INFORMA QUE NOME DO WIFI CONTINUA O MESMO]\n\nTELEFONE DE CONTATO E ENDEREÇO CONFIRMADO\nCLIENTE CIENTE DO PRAZO DE [24/48] HORAS\nCLIENTE CIENTE DE POSSÍVEL TAXA DE VISITA IMPRODUTIVA NO VALOR DE R$ 50,00\nCLIENTE CIENTE DE RETORNO CASO NORMALIZE",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script5",
+    "title": "O.S FTTX",
+    "description": "Script padrão para gerar ordem de serviço de manutenção da rede FTTX",
+    "code": "TESTES REALIZADOS:\n\nFONTE POE [APAGADA, TROCA DE TOMADA SEM SUCESSO / PISCANDO MESMO APÓS RETIRAR O CABO DA POE / PISCANDO APENAS QUANDO CONECTADA NA POE, PORÉM NÃO IDENTIFICADO FALHA]\n[CABO VERIFICADO E  REBOOT REALIZADO]\n\nOU\n\nFONTE POE ACESA E CONTÍNUA\nFEITO REBOOT E VERIFICADO OS CABOS\n[ROTEADOR DE PLATAFORMA CONFIGURADO / ROTEADOR PARTICULAR, INFORMA QUE NOME DO WIFI CONTINUA O MESMO]\n\n\nTELEFONE DE CONTATO E ENDEREÇO CONFIRMADO\nCLIENTE CIENTE DO PRAZO DE [24/48] HORAS\nCLIENTE CIENTE DE POSSÍVEL TAXA DE VISITA IMPRODUTIVA NO VALOR DE R$ 50,00\nCLIENTE CIENTE DE RETORNO CASO NORMALIZE",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script6",
+    "title": "O.S RÁDIO",
+    "description": "Script padrão para gerar ordem de serviço de manutenção da rede RÁDIO",
+    "code": "SEM ACESSO\nRELATO DETALHADO DO CLIENTE: xx\n\nTESTES REALIZADOS:\n\nFONTE POE APAGADA, TROCA DE TOMADA SEM SUCESSO\n\nOU\n\nFONTE POE ACESA E CONTÍNUA\nFEITO REBOOT E VERIFICADO OS CABOS\n[ROTEADOR DE PLATAFORMA CONFIGURADO / ROTEADOR PARTICULAR, INFORMA QUE NOME DO WIFI CONTINUA O MESMO]\n\nRÁDIO:  [ ONLINE, DESCONECTADO DO PAINEL / NÃO FOI POSSÍVEL CONECTAR ]\n\nTELEFONE DE CONTATO E ENDEREÇO CONFIRMADO\nCLIENTE CIENTE DO PRAZO DE [24/48] HORAS\nCLIENTE CIENTE DE POSSÍVEL TAXA DE VISITA IMPRODUTIVA NO VALOR DE R$ 50,00\nCLIENTE CIENTE DE RETORNO CASO NORMALIZE",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script7",
+    "title": "O.S Troca de Equipamento",
+    "description": "Script padrão para gerar ordem de serviço de troca de equipamento",
+    "code": "// IDENTIFICADO EQUIPAMENTO EM COMODATO DANIFICADO OU APRESENTANDO PROBLEMAS\n\nTIPO DE EQUIPAMENTO:\n\n( ) FONTE DE ENERGIA ( ) ONU ( ) ROTEADOR ( ) ONT  ( ) FONTE POE\n\n// FAVOR AVALIAR DEFEITO NO EQUIPAMENTO, SE NÃO FOI CAUSADO PELO CLIENTE REALIZAR A TROCA.\n\n/// SE IDENTIFICAR DANO PELO CLIENTE, COMUNICAR A SUPERVISÃO PARA QUE SEJA AUTORIZADO A TROCA.\n\nTELEFONE DE CONTATO E ENDEREÇO CONFIRMADO\nCLIENTE CIENTE DO PRAZO DE 48H\nCLIENTE CIENTE DA POSSIBILIDADE DE SER GERADA TAXA REFERENTE AO DANO DO EQUIPAMENTO MEDIANTE ANÁLISE TÉCNICA\nCLIENTE CIENTE DE RETORNO CASO NORMALIZE",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script8",
+    "title": "Sem Sucesso Contato",
+    "description": "Script utilizado para tentativa de contato sem sucesso. ",
+    "code": "VISTO QUE FORAM FEITO TENTATIVAS NOS DIAS X,Y E Z SEM SUCESSO\n\nCONEXÃO DO CLIENTE RETORNOU, PROTOCOLO ENCERRADO!",
+    "isDeletable": false,
+    "isFavorite": false
+  },
+  {
+    "id": "script1",
+    "title": "Troca de Titularidade",
+    "description": "Script utilizado para realizar a troca de titularidade",
+    "code": "TROCA DE TITULARIDADE\n\nXXXNOMEXXXXX\n\n>ANTIGO<\nLOGIN AUTENTICAÇÃO: xxxx\nSENHA AUTENTICAÇÃO: xxxx\n\n>NOVO<\nLOGIN AUTENTICAÇÃO: xxxx\nSENHA AUTENTICAÇÃO: xxxx\n\n//LOGIN ALTERADO, ATENDIMENTO ENCERADO//",
+    "isDeletable": false,
+    "isFavorite": false
+  }
+
+  ],
+  "tools": [
+    { "id": "tool1", "name": "Grafana", "url": "http://monitor.emexinternet.com.br:3000/login", "description": "Ferramenta de monitoramento de redes e rotas.", "category": "monitoramento", "icon": "DataImages/grafana_icon.png", "isDeletable": false },
+    { "id": "tool2", "name": "Zabbix", "url": "http://monitor.emexinternet.com.br/zabbix/index.php?request=zabbix.php%3Faction%3Ddashboard.view", "description": "Ferramenta de alertas de redes e rotas.", "category": "monitoramento", "icon": "DataImages/zabbix_icon.png", "isDeletable": false },
+    { "id": "tool3", "name": "React", "url": "http://suporte.emexinternet.com.br", "description": "Ferramenta de identificação de falhas.", "category": "monitoramento", "icon": "DataImages/react_icon.png", "isDeletable": false },
+    { "id": "tool4", "name": "Wiki Emex", "url": "http://10.200.200.2:3000/pt-br/scripts", "description": "Wiki para informações gerais de atendimentos e scripts.", "category": "consulta", "icon": "DataImages/icon_emex.png", "isDeletable": false },
+    { "id": "tool5", "name": "Flashman", "url": "https://flashman.emextelecom.com.br/login", "description": "Ferramenta de acesso e gerenciamento de roteadores em comodato.", "category": "atendimento", "icon": "DataImages/flashman_icon.png", "isDeletable": false },
+    { "id": "tool6", "name": "Hubsoft", "url": "https://emex.hubsoft.com.br/cliente", "description": "Ferramenta de relato e acesso aos serviços do cliente.", "category": "atendimento", "icon": "DataImages/hubsoft_icon.png", "isDeletable": false },
+    { "id": "tool7", "name": "MatrixGo", "url": "https://emex.matrixdobrasil.ai/Painel/login", "description": "Ferramenta de atendimento ao cliente via Whatsapp.", "category": "atendimento", "icon": "DataImages/icon_matrix.png", "isDeletable": false },
+    { "id": "tool8", "name": "NewWave URA", "url": "https://emex.newave.one", "description": "Ferramenta de atendimento ao cliente via Ligação.", "category": "atendimento", "icon": "DataImages/newave_icon.png", "isDeletable": false }
+  ]
+}

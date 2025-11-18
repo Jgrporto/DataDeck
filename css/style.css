@@ -1,0 +1,983 @@
+/* ===================================================
+   STYLE.CSS FINAL E OTIMIZADO - TEMA "CLARITY"
+   =================================================== */
+
+/* --- 1. FUNDAÇÃO: Variáveis, Fontes e Estilos Globais --- */
+:root, [data-theme="light"] {
+    --cor-fundo: #f8f9fa;
+    --cor-surface: #ffffff;
+    --cor-borda: #dee2e6;
+    --cor-texto-principal: #212529;
+    --cor-texto-secundario: #6c757d;
+    --cor-destaque: #0d6efd;
+    --cor-destaque-hover: #0b5ed7;
+    --sombra-suave: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+[data-theme="dark"] {
+    --cor-fundo: #161b22;
+    --cor-surface: #21262d;
+    --cor-borda: #30363d;
+    --cor-texto-principal: #e6edf3;
+    --cor-texto-secundario: #8b949e;
+    --cor-destaque: #58a6ff;
+    --cor-destaque-hover: #79c0ff;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    margin: 0;
+    font-size: 16px; 
+    line-height: 1.6;
+    zoom: 0.9;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* --- 2. LAYOUT GERAL E NAVBAR --- */
+
+/* Adiciona um espaço no topo do body para a navbar flutuante não cobrir o conteúdo */
+body {
+    padding-top: 100px;
+}
+
+/* O header agora é fixo e flutuante */
+header.floating-header {
+    background: var(--cor-surface);
+    padding: 12px;
+    border-radius: 50px; /* Bordas bem arredondadas para um visual de pílula */
+    box-shadow: var(--sombra-suave);
+    border: 1px solid var(--cor-borda);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    /* Posicionamento no topo e centralizado */
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto; /* A largura se ajusta ao conteúdo */
+    z-index: 1000;
+}
+
+header.floating-header .site-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    padding: 0 10px 0 20px;
+    white-space: nowrap; /* Impede que o título quebre linha */
+}
+
+header.floating-header .profile-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+}
+
+header.floating-header .profile-button img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+}
+
+/* O container da navegação interativa */
+.interactive-nav {
+    display: flex;
+    align-items: center;
+    transition: all 0.4s ease;
+}
+
+/* Estilo de cada link/botão de navegação */
+.nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    overflow: hidden;
+    color: var(--cor-texto-secundario);
+    
+    /* Estado Padrão (Recolhido) */
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: transparent;
+    margin: 0 5px;
+    
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); /* Animação mais suave */
+}
+
+.nav-icon {
+    font-size: 20px;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+}
+
+.nav-text {
+    color: var(--cor-texto-principal);
+    font-weight: 500;
+    white-space: nowrap;
+    opacity: 0;
+    font-size: 16px;
+    position: absolute; /* Permite que ele não ocupe espaço quando escondido */
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* --- ESTADO HOVER (Quando o mouse está sobre a NAV inteira) --- */
+
+.interactive-nav:hover .nav-link {
+    width: 140px;
+    border-radius: 30px;
+    background-color: var(--cor-fundo);
+}
+
+.interactive-nav:hover .nav-link.active-link {
+     background-color: var(--cor-destaque);
+}
+
+.interactive-nav:hover .nav-icon {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.interactive-nav:hover .nav-text {
+    position: relative;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.interactive-nav:hover .nav-link.active-link .nav-text {
+    color: white;
+}
+
+.nav-link.active-link .nav-icon {
+    color: var(--cor-destaque);
+}
+
+.interactive-nav:hover .nav-link.active-link .nav-icon {
+    color: white; /* Cor do ícone no estado ativo e hover (embora ele suma) */
+}
+
+/* --- 3. COMPONENTES GERAIS REUTILIZÁVEIS --- */
+
+/* Estilo Base dos Botões */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background-color: var(--cor-destaque);
+    color: #ffffff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* Cantos levemente arredondados */
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif; /* Garante a fonte correta */
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    background-color: var(--cor-destaque-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Variação de Botão Secundário (cinza) */
+.btn-secondary {
+    background-color: var(--cor-surface);
+    color: var(--cor-texto-secundario);
+    border: 1px solid var(--cor-borda);
+}
+
+.btn-secondary:hover {
+    background-color: var(--cor-fundo);
+    border-color: var(--cor-texto-secundario);
+    color: var(--cor-texto-principal);
+}
+
+/* Variação de Botão de Perigo (vermelho) */
+.btn-danger {
+    background-color: #dc3545;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+
+/* Estilos para a Janela Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 22, 41, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+/* Estilo para mostrar o modal (controlado pelo JS) */
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--cor-surface);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+    width: 90%;
+    max-width: 550px;
+    border-top: 4px solid var(--cor-destaque);
+    transform: scale(0.95);
+    transition: transform 0.3s;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--cor-texto-principal);
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--cor-texto-secundario);
+    font-size: 14px;
+}
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.form-group input:focus, 
+.form-group textarea:focus, 
+.form-group select:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-destaque) 20%, transparent);
+}
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* --- 4. ESTILOS DAS PÁGINAS ESPECÍFICAS --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.page-header h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+/* --- 4.2 - Página: Biblioteca de Scripts --- */
+
+/* Layout principal da página de scripts com duas colunas */
+.scripts-section {
+    display: grid;
+    grid-template-columns: 350px 1fr; /* Coluna da lista com 350px de largura */
+    gap: 30px;
+    height: calc(100vh - 160px); /* Altura da tela menos header e paddings */
+}
+
+/* Estilo da coluna da esquerda, que contém a lista */
+.scripts-list {
+    background-color: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Garante que o conteúdo interno não vaze */
+}
+
+/* Cabeçalho dentro da coluna da lista */
+.scripts-list-header {
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--cor-borda);
+    flex-shrink: 0; /* Impede que o header encolha */
+}
+
+.scripts-list-header h2 {
+    margin: 0 0 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: var(--cor-fundo);
+}
+
+.import-export-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.import-export-actions .btn {
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+/* A lista <ul> que conterá os cards de script */
+#script-list-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto; /* Adiciona rolagem interna apenas à lista */
+    flex-grow: 1; /* Faz a lista ocupar todo o espaço vertical restante */
+    padding-right: 5px; /* Espaço para a barra de rolagem */
+}
+
+/* Estilos da coluna da direita, que exibe o conteúdo do script */
+.script-content {
+    background-color: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.script-content h2 {
+    margin-top: 0;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+}
+
+#script-display h3,
+#script-display p {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    padding: 15px;
+    border-radius: 6px;
+    margin: 0 0 15px 0;
+}
+
+#script-display h3 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#script-display p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--cor-texto-secundario);
+}
+
+.code-block-wrapper {
+    position: relative;
+    margin-top: 20px;
+}
+
+#script-display pre {
+    background-color: #282c34; /* Fundo escuro padrão para código */
+    color: #abb2bf;
+    padding: 20px;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    border: 1px solid var(--cor-borda);
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    background-color: var(--cor-destaque);
+    border: none;
+    color: #fff;
+    transition: opacity 0.2s, background-color 0.2s;
+    border-radius: 6px;
+}
+
+.copy-btn:hover {
+    background-color: var(--cor-destaque-hover);
+}
+
+/* Card de Script na Lista */
+/* Estilo do Card de Script na lista da esquerda */
+.script-item {
+    display: block;
+    padding: 20px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 12px;
+    margin-bottom: 15px;
+    background-color: var(--cor-surface);
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.script-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-suave);
+    border-color: var(--cor-destaque);
+}
+
+.script-item-title {
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--cor-texto-principal);
+    display: block;
+    margin-bottom: 8px;
+    padding-left: 30px; /* Adiciona um recuo para o ícone não sobrepor o texto */
+    position: relative;
+}
+
+/* Descrição dentro do card */
+.script-item-description {
+    font-size: 14px;
+    color: var(--cor-texto-secundario);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Botão de favorito no canto do card */
+.script-item .favorite-btn {
+    position: absolute;
+    top: 22px;  /* Ajusta a altura para alinhar com o título */
+    left: 20px; /* Move para a esquerda */
+    z-index: 5; /* Garante que fique sobre o conteúdo se necessário */
+    display: inline-block;
+    opacity: 0.3;
+    transition: color 0.2s, transform 0.2s, opacity 0.2s;
+    line-height: 1;
+    padding: 0;
+    font-size: 18px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--cor-texto-secundario);
+}
+
+.script-item:hover .favorite-btn,
+.script-item .favorite-btn.is-favorited {
+    opacity: 1;
+}
+
+.script-item .favorite-btn:hover {
+    color: var(--cor-destaque);
+    transform: scale(1.1);
+}
+.script-item .favorite-btn .favorited-star {
+    color: #f1c40f;
+}
+
+/* Container para os botões de Editar/Apagar nos itens locais */
+.script-item-actions {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilo dos botões de Editar/Apagar */
+.script-item .edit-btn,
+.script-item .delete-btn {
+    background-color: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto-secundario);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(5px);
+    pointer-events: none;
+}
+
+/* Efeito de hover no card para mostrar os botões */
+.script-item:hover .edit-btn,
+.script-item:hover .delete-btn {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+/* Efeitos de hover nos próprios botões */
+.script-item .edit-btn:hover {
+    background-color: var(--cor-destaque);
+    color: white;
+    border-color: var(--cor-destaque);
+}
+
+.script-item .delete-btn:hover {
+    background-color: var(--cor-erro);
+    color: white;
+    border-color: var(--cor-erro);
+}
+
+/* --- 4.3 - Página: Ferramentas --- */
+.tools-grid {
+    display: grid;
+    /* Cria colunas automáticas com tamanho mínimo de 300px */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.tools-grid h2 {
+    grid-column: 1 / -1; /* Faz o título ocupar a linha inteira da grade */
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 0;
+    border-bottom: 1px solid var(--cor-borda);
+    padding-bottom: 15px;
+}
+.tools-grid h2:first-of-type {
+    margin-top: 0;
+}
+
+.tools-grid .tool-card {
+    background-color: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 25px;
+    text-decoration: none;
+    color: var(--cor-texto-principal);
+    box-shadow: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.tools-grid .tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-suave);
+    border-color: var(--cor-destaque);
+}
+
+.tool-card h3 {
+    margin: 0 0 10px 0;
+    color: var(--cor-texto-principal);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tool-card .tool-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.tool-card p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--cor-texto-secundario);
+}
+
+
+/* --- 4.4 - Página: Análise de Desconto --- */
+.analise-layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 30px;
+    height: calc(100vh - 220px); /* Altura da tela menos header e paddings */
+}
+
+.texto-fixo-coluna, .iframe-coluna {
+    background-color: var(--cor-surface);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Garante que o conteúdo não vaze */
+}
+
+.texto-fixo-coluna h2, .iframe-coluna h2 {
+    margin-top: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+#anotacoes-textarea {
+    flex-grow: 1; /* Ocupa o espaço vertical */
+    width: 100%;
+    box-sizing: border-box;
+    resize: none;
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-principal);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+#anotacoes-textarea:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--cor-destaque) 20%, transparent);
+}
+
+.anotacoes-actions {
+    display: flex;
+    gap: 10px;
+}
+
+#analise-iframe {
+    flex-grow: 1;
+    border: 1px solid var(--cor-borda);
+    border-radius: 6px;
+}
+
+/* --- 5. PAINEL DE PERFIL E CONFIGURAÇÕES (LATERAL) --- */
+
+.settings-panel {
+    position: fixed;
+    top: 0;
+    right: -360px; /* Começa fora da tela */
+    width: 340px;
+    height: 100%;
+    background-color: var(--cor-surface);
+    border-left: 1px solid var(--cor-borda);
+    box-shadow: -5px 0 25px rgba(0,0,0,0.1);
+    z-index: 1010;
+    transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-panel.open {
+    right: 0; /* Entra na tela */
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    border-bottom: 1px solid var(--cor-borda);
+    flex-shrink: 0;
+}
+
+.settings-header h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: var(--cor-texto-secundario);
+    padding: 0 5px;
+}
+
+.settings-body {
+    padding: 25px;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* Estilos para a nova seção de perfil */
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--cor-borda);
+}
+.profile-pic-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+#sidebar-profile-pic {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--cor-surface);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+}
+.profile-pic-edit {
+    position: absolute;
+    bottom: 10px;
+    right: 5px;
+    background-color: var(--cor-destaque);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    border: 2px solid var(--cor-surface);
+}
+#sidebar-username {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--cor-texto-principal);
+    margin: 0;
+}
+
+/* Estilos para os grupos de configurações */
+.setting-group {
+    margin-bottom: 25px;
+}
+.setting-group:last-child {
+    margin-bottom: 0;
+}
+.setting-group h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--cor-texto-secundario);
+    text-transform: uppercase;
+    margin: 0 0 10px 0;
+    letter-spacing: 0.5px;
+}
+.setting-item-group {
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 5px 15px;
+}
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+.setting-item-group .setting-item:not(:last-child) {
+    border-bottom: 1px solid var(--cor-borda);
+}
+.setting-item label {
+    font-weight: 500;
+}
+
+/* --- 6. DESIGN RESPONSIVO --- */
+
+@media (max-width: 850px) {
+    body {
+        padding-top: 70px;
+    }
+    header.floating-header {
+        width: 100%;
+        top: 0;
+        left: 0;
+        transform: none;
+        border-radius: 0;
+        padding: 0;
+        height: 70px;
+    }
+    header.floating-header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        padding: 0 15px;
+    }
+    header.floating-header .site-title {
+        padding: 0;
+    }
+    .interactive-nav {
+        display: none;
+    }
+    .hamburger-btn {
+        display: block;
+        background: none;
+        border: none;
+        color: var(--cor-texto-principal);
+        font-size: 24px;
+        cursor: pointer;
+    }
+    .scripts-section,
+    .analise-layout {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        gap: 25px;
+    }
+    #script-list-ul {
+        overflow-y: visible;
+    }
+}
+
+
+/* --- 7. CLASSES UTILITÁRIAS --- */
+
+.hidden {
+    display: none !important;
+}
+
+/* ===================================================
+   Técnica Universal para Ocultar a Barra de Rolagem
+   =================================================== */
+
+/* 1. O container-pai: ele define a área visível e esconde o que transborda. */
+.scroll-wrapper {
+    overflow: hidden; /* Esconde a barra de rolagem que está "fora" */
+    flex-grow: 1;     /* Faz ele ocupar o espaço vertical restante */
+    position: relative; /* Contexto para a lista interna */
+}
+
+/* 2. A lista interna: ela é mais larga e contém a barra de rolagem. */
+#script-list-ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: scroll; /* FORÇA a barra de rolagem a existir */
+
+    /* O TRUQUE: O padding à direita cria espaço, o margin negativo empurra esse espaço 
+       (junto com a barra de rolagem) para fora da área visível do .scroll-wrapper. */
+    padding-right: 20px; 
+    margin-right: -20px;
+    
+    /* Garante que ocupe toda a altura do pai para poder rolar */
+    height: 100%; 
+}
+
+/* ========================================================
+   Ocultar a Barra de Rolagem do PAINEL DE CONTEÚDO do Script
+   ======================================================== */
+
+.script-content {
+  /* Para Firefox */
+  scrollbar-width: none;
+  
+  /* Para Internet Explorer e Edge legado */
+  -ms-overflow-style: none;
+}
+
+/* Para Chrome, Safari, Edge, Opera e outros baseados em WebKit */
+.script-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===================================================
+   Estilos para o Interruptor (Toggle Switch)
+   =================================================== */
+
+/* O container do interruptor */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    flex-shrink: 0; /* Impede que o switch encolha em layouts flex */
+}
+
+/* Esconde o checkbox padrão do HTML */
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* O "trilho" do interruptor */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+/* A "bolinha" que desliza */
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+/* Estilos para quando o interruptor está LIGADO */
+input:checked + .slider {
+    background-color: var(--cor-destaque);
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* Estilos para o formato arredondado */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

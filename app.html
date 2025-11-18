@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataDeck - Suporte Técnico</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="DataImages/DataDeck_icon.png" type="image/x-icon">
+    <script src="https://kit.fontawesome.com/5c5c88297c.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="menu-overlay" class="menu-overlay"></div>
+
+<header class="floating-header">
+    <div class="site-title">DataDeck</div>
+    <nav class="interactive-nav">
+        <a href="#" id="nav-scripts" class="nav-link active-link" title="Biblioteca de Scripts">
+            <i class="fas fa-file-code nav-icon"></i>
+            <span class="nav-text">Biblioteca</span>
+        </a>
+        <a href="#" id="nav-analise" class="nav-link" title="Análise de Desconto">
+            <i class="fas fa-chart-pie nav-icon"></i>
+            <span class="nav-text">Análise</span>
+        </a>
+        <a href="#" id="nav-ferramentas" class="nav-link" title="Ferramentas">
+            <i class="fas fa-tools nav-icon"></i>
+            <span class="nav-text">Ferramentas</span>
+        </a>
+    </nav>
+    <button id="profile-btn" class="profile-button" title="Perfil e Configurações">
+        <img id="navbar-profile-pic" src="DataImages/UserID.png" alt="Foto do Perfil">
+    </button>
+</header>
+
+<div class="main-content-wrapper">
+
+<main id="script-library" class="page-section">
+    <div class="container">
+        <div class="page-header">
+            <h1>Biblioteca de Scripts</h1>
+            <button id="add-script-page-btn" class="btn"><i class="fas fa-plus"></i> Adicionar Script</button>
+        </div>
+        <div class="scripts-section">
+            <div class="scripts-list">
+                <div class="scripts-list-header">
+                    <h2>Scripts Salvos</h2>
+                    <input type="search" id="search-input" placeholder="Buscar por título ou descrição...">
+                    <div class="import-export-actions">
+                        <button id="export-btn" class="btn btn-secondary"><i class="fas fa-file-download"></i> Exportar</button>
+                        <button id="import-btn" class="btn btn-secondary"><i class="fas fa-file-upload"></i> Importar</button>
+                        <input type="file" id="import-file-input" style="display: none;" accept=".json">
+                    </div>
+                </div>
+
+                <div class="scroll-wrapper">
+                    <ul id="script-list-ul"></ul>
+                </div>
+                </div>
+            <div class="script-content">
+                <h2>Detalhes do Script</h2>
+                <div id="script-display">
+                    <p>Selecione um script da lista para ver o conteúdo aqui.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+    <main id="analise-section" class="page-section" style="display: none;">
+        <div class="container">
+            <div class="page-header">
+                <h1>Análise de Desconto</h1>
+            </div>
+            <div class="analise-layout">
+                <div class="texto-fixo-coluna">
+                    <h2><i class="fas fa-book-open"></i> Caderno de Anotações</h2>
+                    <textarea id="anotacoes-textarea" placeholder="Suas anotações são salvas automaticamente..."></textarea>
+                    <div class="anotacoes-actions">
+                        <button id="copiar-anotacoes-btn" class="btn"><i class="fas fa-copy"></i> Copiar Tudo</button>
+                        <button id="limpar-anotacoes-btn" class="btn btn-secondary"><i class="fas fa-eraser"></i> Limpar</button>
+                    </div>
+                </div>
+                <div class="iframe-coluna">
+                    <iframe id="analise-iframe" src="https://falhas.emexinternet.com.br" title="Análise de Desconto Flashman"></iframe>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <main id="ferramentas-section" class="page-section" style="display: none;">
+        <div class="container">
+            <div class="page-header">
+                <h1>Painel de Ferramentas</h1>
+                <button id="add-tool-btn" class="btn"><i class="fas fa-plus"></i> Adicionar Ferramenta</button>
+            </div>
+            <div id="monitoramento-tools">
+                <h2><i class="fas fa-chart-line"></i> Ferramentas de Monitoramento</h2>
+                <div class="tools-grid"></div>
+            </div>
+            <div id="consulta-tools">
+                <h2><i class="fas fa-book-open"></i> Ferramentas de Consulta e Dúvidas</h2>
+                <div class="tools-grid"></div>
+            </div>
+            <div id="atendimento-tools">
+                <h2><i class="fas fa-headset"></i> Ferramentas de Atendimento</h2>
+                <div class="tools-grid"></div>
+            </div>
+        </div>
+    </main>
+
+</div> 
+
+<div id="settings-panel" class="settings-panel">
+    <div class="settings-header">
+        <h2>Meu Perfil</h2>
+        <button id="close-settings-btn" class="close-btn">&times;</button>
+    </div>
+
+    <div class="settings-body">
+        <div class="profile-header">
+            <div class="profile-pic-wrapper">
+                <img id="sidebar-profile-pic" src="DataImages/UserID.png" alt="Foto do Perfil">
+                <label for="profile-pic-input" class="profile-pic-edit" title="Trocar foto">
+                    <i class="fas fa-camera"></i>
+                </label>
+                <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
+            </div>
+            <h3 id="sidebar-username">Suporte Técnico</h3>
+        </div>
+
+        <div class="setting-group">
+            <h3>Aparência</h3>
+            <div class="setting-item-group">
+                <div class="setting-item">
+                    <label for="user-dark-mode-toggle">Modo Escuro</label>
+                    <label class="switch">
+                        <input type="checkbox" id="user-dark-mode-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="setting-group">
+            <h3>Sessão</h3>
+            <div class="setting-item-group">
+                 <button id="user-logout-btn" class="btn btn-secondary" style="width: 100%;">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="add-script-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2>Adicionar Novo Script</h2>
+        <form id="add-script-form">
+            <div class="form-group">
+                <label for="script-title">Título</label>
+                <input type="text" id="script-title" required>
+            </div>
+            <div class="form-group">
+                <label for="script-description">Descrição</label>
+                <textarea id="script-description" rows="2" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="script-code">Código</label>
+                <textarea id="script-code" rows="8" required></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Salvar Script</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="add-tool-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="tool-modal-title">Adicionar Nova Ferramenta</h2>
+        <form id="add-tool-form">
+            <div class="form-group">
+                <label for="tool-name">Nome da Ferramenta</label>
+                <input type="text" id="tool-name" required>
+            </div>
+            <div class="form-group">
+                <label for="tool-url">Link (URL)</label>
+                <input type="url" id="tool-url" required>
+            </div>
+            <div class="form-group">
+                <label for="tool-description">Descrição Curta</label>
+                <textarea id="tool-description" rows="2" required></textarea>
+            </div>
+            <div class="form-group icon-upload-group">
+                <div class="icon-upload-label-wrapper">
+                    <label>Ícone da Ferramenta (opcional)</label>
+                    <label for="tool-icon-input" class="btn btn-secondary file-upload-btn">
+                        <i class="fas fa-upload"></i> Escolher arquivo
+                    </label>
+                    <input type="file" id="tool-icon-input" accept="image/*" style="display: none;">
+                </div>
+                <img id="tool-icon-preview" src="" alt="" class="tool-icon-preview hidden">
+            </div>
+            <div class="form-group">
+                <label for="tool-category">Categoria</label>
+                <select id="tool-category" required>
+                    <option value="monitoramento">Monitoramento</option>
+                    <option value="consulta">Consulta e Dúvidas</option>
+                    <option value="atendimento">Atendimento</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-tool-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Salvar Ferramenta</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-firestore-compat.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

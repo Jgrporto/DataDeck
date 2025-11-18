@@ -1,0 +1,509 @@
+/* ===================================================
+   CSS Completo para o Novo Layout de Dashboard do Admin
+   =================================================== */
+
+/* --- 1. Estilos Gerais e Variáveis --- */
+:root {
+    --cor-primaria-fundo: #ffffff; 
+    --cor-texto-escuro: #2c3e50; 
+    --cor-destaque: #3498db;
+    --cor-fundo-geral: #f0f2f5;
+    --cor-fundo-cartao: #ffffff; 
+    --cor-borda-sutil: #e6e9f0;
+    --cor-secundaria: #6c757d;
+    --cor-erro: #e74c3c;
+    --status-local: #f39c12;
+    --status-nuvem: #27ae60;
+    --admin-table-header: #ecf0f1; /* Esta nós vamos substituir */
+    --admin-widget-header-bg: #f8f9fa; /* <-- ADICIONE/USE ESTA */
+}
+
+[data-theme="dark"] {
+    /* ... (suas variáveis de cor do tema escuro continuam aqui) ... */
+    --cor-primaria-fundo: #192231;
+    --cor-primaria-texto: #eaf0f6;
+    --cor-destaque: #00aaff;
+    --cor-fundo-geral: #101721;
+    --cor-fundo-cartao: #1f2a3a;
+    --cor-texto-escuro: #d0d8e2;
+    --cor-borda-sutil: #303d52;
+     --admin-widget-header-bg: #34495e; /* <-- ADICIONE ESTA */
+
+    /* --- Estilos de Modo Escuro para o Painel de Admin --- */
+
+    /* 1. Cabeçalho da Tabela */
+    .admin-table thead {
+        background-color: #34495e;
+        color: #bdc3c7;
+    }
+    .admin-table thead th {
+        background-color: #34495e;
+    }
+
+    /* 2. Links da Tabela */
+    .admin-table td a {
+        color: var(--cor-destaque);
+    }
+
+    /* 3. Campos de Busca */
+    .admin-search-bar {
+        background-color: #2c3e50;
+        border-color: var(--cor-borda-sutil);
+        color: var(--cor-primaria-texto);
+    }
+    .admin-search-bar::placeholder {
+        color: var(--cor-secundaria);
+    }
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--cor-texto-escuro);
+    margin: 0;
+    background-color: var(--cor-fundo-geral);
+    zoom: 0.9;
+    
+    /* Configuração para layout fixo */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Trava a rolagem da página inteira */
+}
+
+/* --- 2. Componentes Reutilizáveis (Botões, Modais) --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--cor-destaque);
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+.btn:hover { filter: brightness(1.1); }
+.btn-secondary { background-color: var(--cor-secundaria); }
+.btn-danger { background-color: var(--cor-erro); }
+.btn-small { padding: 5px 12px; font-size: 14px; }
+
+.badge { background-color: var(--cor-erro); color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; margin-left: 5px; }
+
+/* Estilos para a Janela Modal e seus Formulários */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(10, 22, 41, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    
+    /* Propriedades para a animação */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--cor-fundo-cartao);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--sombra-suave);
+    width: 90%;
+    max-width: 550px;
+    border-top: 4px solid var(--cor-destaque);
+
+    /* Animação de "zoom" para o conteúdo */
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.visible .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+    color: var(--cor-texto-escuro);
+    font-size: 22px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500; /* Peso médio */
+    color: var(--cor-texto-escuro);
+    font-size: 14px;
+}
+
+.form-group input, 
+.form-group textarea, 
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--cor-borda-sutil);
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: var(--cor-fundo-geral);
+    color: var(--cor-texto-escuro);
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus, 
+.form-group select:focus {
+    outline: none;
+    border-color: var(--cor-destaque);
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
+}
+
+.form-actions {
+    margin-top: 30px;
+    text-align: right;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+/* Estilos específicos para o upload de ícone */
+.icon-upload-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+}
+.icon-upload-label-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-grow: 1;
+}
+.file-upload-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    display: inline-block;
+}
+.tool-icon-preview {
+    width: 60px;
+    height: 60px;
+    border: 1px dashed var(--cor-borda-sutil);
+    border-radius: 5px;
+    object-fit: contain;
+    background-color: var(--cor-fundo-geral);
+    flex-shrink: 0;
+}
+.hidden {
+    display: none !important;
+}
+
+/* --- 3. Cabeçalho Superior Fixo --- */
+.admin-header {
+    background-color: var(--cor-primaria-fundo);
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--cor-borda-sutil);
+    flex-shrink: 0;
+    border-bottom: 4px solid var(--cor-destaque);
+}
+
+.header-title .site-title { font-size: 24px; font-weight: 600; }
+.header-title .admin-tag { font-size: 12px; color: var(--cor-secundaria); margin-top: -5px; }
+.header-actions { display: flex; gap: 10px; }
+
+/* NOVO: Estilo para o perfil de usuário no header */
+.header-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-left: 20px;
+}
+.header-profile span { font-weight: 500; }
+.logout-button {
+    background: none;
+    border: none;
+    color: var(--cor-secundaria);
+    font-size: 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+.logout-button:hover { color: var(--cor-erro); }
+
+/* --- 4. Layout Principal do Dashboard --- */
+
+.admin-dashboard {
+    flex-grow: 1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    padding: 30px;
+    align-items: start;
+    overflow: hidden; 
+}
+
+/* CORREÇÃO: As colunas NÃO devem ter rolagem */
+.dashboard-main-col, .dashboard-side-col {
+    overflow-y: visible; /* Garante que não haja barra de rolagem aqui */
+}
+
+/* --- 5. Widgets (Cards de Conteúdo) --- */
+
+/* Estilo BASE para TODOS os widgets */
+.dashboard-widget {
+    background-color: var(--cor-fundo-cartao);
+    border-radius: 8px;
+    border: 1px solid var(--admin-border-color);
+    margin-bottom: 30px;
+}
+
+/* Estilo ADICIONAL apenas para widgets com tabelas que rolam */
+.widget-table {
+    display: flex;
+    flex-direction: column;
+    max-height: calc(50vh - 75px); /* Define a altura máxima */
+}
+
+.widget-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--cor-borda-sutil);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex-shrink: 0; /* Impede o header do widget de encolher */
+}
+
+.widget-header h2 {
+    margin: 0;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.widget-header input {
+    padding: 8px 12px;
+    border: 1px solid var(--cor-borda-sutil);
+    border-radius: 5px;
+    font-size: 14px;
+    width: 250px;
+}
+
+/* --- 6. Tabela de Gerenciamento --- */
+.admin-table-wrapper {
+    overflow-y: auto; /* A barra de rolagem vive aqui! */
+    flex-grow: 1; /* Faz a área da tabela crescer para preencher o widget */
+}
+
+/* SUBSTITUA A REGRA .admin-table thead th PELA VERSÃO ABAIXO */
+
+.admin-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--admin-table-header, #ecf0f1);
+
+  /* CORREÇÃO PARA O "TREMIDO": 
+     Força o navegador a pré-calcular a renderização do elemento, evitando o "salto". */
+  transform: translateZ(0);
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.admin-table th, .admin-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--cor-borda-sutil);
+    white-space: nowrap;
+}
+.admin-table th {
+    background-color: #f8f9fa;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: var(--cor-secundaria);
+}
+.admin-table tbody tr:hover { background-color: rgba(52, 152, 219, 0.05); }
+.admin-table tbody tr:last-child td { border-bottom: none; }
+.admin-table .actions-cell { text-align: right; }
+.admin-table .actions-cell button {
+    background: none; border: none; cursor: pointer;
+    font-size: 16px; color: #7f8c8d;
+    margin-left: 15px; transition: color 0.2s;
+}
+.admin-table .actions-cell button:hover { color: var(--cor-destaque); }
+.admin-table .actions-cell button.delete:hover { color: var(--cor-erro); }
+.status-badge {
+    padding: 4px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: 500; color: white;
+}
+.status-badge.local { background-color: var(--status-local); }
+.status-badge.nuvem { background-color: var(--status-nuvem); }
+
+/* --- 7. Conteúdo das Configurações na Lateral --- */
+.settings-content { padding: 5px 20px 20px 20px; }
+.setting-group { margin-top: 20px; }
+details.setting-group { margin-top: 0; }
+.setting-group summary {
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--cor-borda-sutil);
+}
+summary::-webkit-details-marker { display: none; }
+.setting-item-group { display: flex; flex-direction: column; gap: 15px; }
+.setting-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.setting-item label { font-weight: 500; }
+.settings-select { width: 150px; padding: 8px; border-radius: 5px; border: 1px solid var(--cor-borda-sutil); }
+.small-hr { border: none; border-top: 1px solid var(--cor-borda-sutil); margin: 5px 0; }
+
+/* ===================================================
+   Estilos para os Novos Widgets de Configuração
+   =================================================== */
+
+/* --- Widget de Estatísticas --- */
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 10px 0;
+}
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+.stat-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--cor-destaque);
+}
+.stat-label {
+    font-size: 12px;
+    color: var(--cor-secundaria);
+}
+
+/* --- Novos Itens de Configuração --- */
+.setting-group-inner {
+    margin-top: 15px;
+    padding-left: 10px;
+    border-left: 2px solid var(--cor-borda-sutil);
+}
+.setting-item-column {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.admin-input { /* Estilo para o novo campo de URL */
+    width: 100%;
+    padding: 8px;
+    border: 1px solid var(--cor-borda-sutil);
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* --- Zona de Perigo --- */
+.danger-zone {
+    border-left: 3px solid var(--cor-erro);
+    padding-left: 15px;
+}
+.danger-zone summary {
+    color: var(--cor-erro);
+}
+
+/* --- Widget de Sessão/Logout --- */
+.session-widget {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    font-size: 14px;
+}
+
+/* ===================================================
+   Estilos para o Interruptor (Toggle Switch)
+   =================================================== */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    flex-shrink: 0; /* Impede que o switch encolha */
+}
+
+.switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider {
+    background-color: var(--cor-destaque);
+}
+
+input:checked + .slider:before {
+    transform: translateX(22px);
+}
+
+/* Formato arredondado */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
