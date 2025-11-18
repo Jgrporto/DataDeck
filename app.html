@@ -82,7 +82,7 @@
                     </div>
                 </div>
                 <div class="iframe-coluna">
-                    <iframe id="analise-iframe" src="https://falhas.emexinternet.com.br" title="Análise de Desconto Flashman"></iframe>
+                    <iframe id="analise-iframe" src="https://atendimento.emexinternet.com.br" title="Análise de Desconto"></iframe>
                 </div>
             </div>
         </div>
@@ -91,20 +91,23 @@
     <main id="ferramentas-section" class="page-section" style="display: none;">
         <div class="container">
             <div class="page-header">
-                <h1>Painel de Ferramentas</h1>
-                <button id="add-tool-btn" class="btn"><i class="fas fa-plus"></i> Adicionar Ferramenta</button>
+                <h1>Termos</h1>
+                <button id="add-term-btn" class="btn"><i class="fas fa-plus"></i> Adicionar Termo</button>
             </div>
-            <div id="monitoramento-tools">
-                <h2><i class="fas fa-chart-line"></i> Ferramentas de Monitoramento</h2>
-                <div class="tools-grid"></div>
-            </div>
-            <div id="consulta-tools">
-                <h2><i class="fas fa-book-open"></i> Ferramentas de Consulta e Dúvidas</h2>
-                <div class="tools-grid"></div>
-            </div>
-            <div id="atendimento-tools">
-                <h2><i class="fas fa-headset"></i> Ferramentas de Atendimento</h2>
-                <div class="tools-grid"></div>
+
+            <div class="terms-layout">
+                <div class="terms-list-panel">
+                    <div class="input-group">
+                        <input type="search" id="search-terms" placeholder="Buscar termo...">
+                    </div>
+                    <ul id="terms-list" class="term-list"></ul>
+                </div>
+
+                <div class="term-output-panel">
+                    <h2 id="term-output-title">Selecione um termo para gerar</h2>
+                    <textarea id="term-output" class="term-output" rows="10" readonly></textarea>
+                    <button id="copy-term-output-btn" class="btn term-copy-btn"><i class="fas fa-copy"></i> Copiar termo gerado</button>
+                </div>
             </div>
         </div>
     </main>
@@ -150,6 +153,43 @@
                 </button>
             </div>
         </div>
+    </div>
+</div>
+
+<div id="add-term-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="term-modal-title">Adicionar Termo</h2>
+        <form id="add-term-form">
+            <div class="form-group">
+                <label for="term-title">Título do Termo</label>
+                <input type="text" id="term-title" required>
+            </div>
+            <div class="form-group">
+                <label for="term-body">Texto do Termo (use "XXX" onde houver variáveis)</label>
+                <textarea id="term-body" rows="8" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="term-variables">Nomes das variáveis (separados por vírgula, na ordem em que aparecem)</label>
+                <input type="text" id="term-variables" placeholder="Ex: Nome do cliente, CPF">
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="cancel-term-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Salvar Termo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="fill-term-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2>Preencher variáveis</h2>
+        <form id="fill-term-form">
+            <div id="fill-term-fields"></div>
+            <div class="modal-actions">
+                <button type="button" id="cancel-fill-term-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Gerar termo</button>
+            </div>
+        </form>
     </div>
 </div>
 

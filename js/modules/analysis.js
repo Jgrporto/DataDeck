@@ -15,7 +15,7 @@ export function initAnalysisModule() {
     if (!iframe && !anotacoesTextareaEl) return;
 
     // Pega a URL salva pelo admin; se não existir, usa a padrão.
-    const savedUrl = localStorage.getItem('dataDeckIframeUrl') || 'https://falhas.emexinternet.com.br';
+    const savedUrl = localStorage.getItem('dataDeckIframeUrl') || 'https://atendimento.emexinternet.com.br';
     
     if (iframe) {
         iframe.src = savedUrl;

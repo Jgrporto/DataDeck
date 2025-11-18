@@ -1,8 +1,7 @@
 import { checkAuth } from './auth.js';
-// Adiciona as novas funções de importação do state
-import { setupListeners, getScriptsForView, getToolsForView, importScriptsLocally, importToolsLocally } from './state.js';
+import { setupListeners, getScriptsForView, getTermsForView, importScriptsLocally, importTermsLocally } from './state.js';
 import { initAdminScriptsModule } from './modules/scripts.js';
-import { initAdminToolsModule } from './modules/tools.js';
+import { initAdminTermsModule } from './modules/terms.js';
 import { initAdminSettingsModule } from './modules/settings.js';
 
 checkAuth();
@@ -10,19 +9,17 @@ checkAuth();
 function updateStats() {
     const statsCloudScriptsEl = document.getElementById('stats-cloud-scripts');
     const statsLocalScriptsEl = document.getElementById('stats-local-scripts');
-    const statsCloudToolsEl = document.getElementById('stats-cloud-tools');
+    const statsTermsTotalEl = document.getElementById('stats-terms-total');
 
     const allScripts = getScriptsForView();
-    const allTools = getToolsForView();
+    const allTerms = getTermsForView();
 
     const localScriptsCount = allScripts.filter(s => String(s.id).startsWith('local_')).length;
     const cloudScriptsCount = allScripts.length - localScriptsCount;
-    const localToolsCount = allTools.filter(t => String(t.id).startsWith('local_')).length;
-    const cloudToolsCount = allTools.length - localToolsCount;
 
     if (statsCloudScriptsEl) statsCloudScriptsEl.textContent = cloudScriptsCount;
     if (statsLocalScriptsEl) statsLocalScriptsEl.textContent = localScriptsCount;
-    if (statsCloudToolsEl) statsCloudToolsEl.textContent = cloudToolsCount;
+    if (statsTermsTotalEl) statsTermsTotalEl.textContent = allTerms.length;
 }
 
 function setupLogout() {
@@ -37,8 +34,6 @@ function setupLogout() {
     }
 }
 
-
-// ▼▼▼ NOVA FUNÇÃO UNIVERSAL DE IMPORTAÇÃO ▼▼▼
 function setupUniversalImporter() {
     const importBtn = document.getElementById('universal-import-btn');
     const importInput = document.getElementById('universal-import-input');
@@ -55,24 +50,22 @@ function setupUniversalImporter() {
                 try {
                     const data = JSON.parse(e.target.result);
                     let scriptsFound = 0;
-                    let toolsFound = 0;
+                    let termsFound = 0;
 
-                    // Verifica e importa SCRIPTS
                     if (data.scripts && Array.isArray(data.scripts)) {
                         importScriptsLocally(data.scripts);
                         scriptsFound = data.scripts.length;
                     }
 
-                    // Verifica e importa FERRAMENTAS
-                    if (data.tools && Array.isArray(data.tools)) {
-                        importToolsLocally(data.tools);
-                        toolsFound = data.tools.length;
+                    if (data.terms && Array.isArray(data.terms)) {
+                        importTermsLocally(data.terms);
+                        termsFound = data.terms.length;
                     }
 
-                    alert(`Importação concluída!\n- ${scriptsFound} scripts adicionados localmente.\n- ${toolsFound} ferramentas adicionadas localmente.\n\nUse o botão "Sincronizar" para enviá-los para a nuvem.`);
+                    alert(`Importacao concluida!\n- ${scriptsFound} scripts adicionados localmente.\n- ${termsFound} termos adicionados localmente.\n\nUse o botao "Sincronizar" para envia-los para a nuvem.`);
 
                 } catch (error) {
-                    alert('Erro ao ler o arquivo. Verifique se é um arquivo .json válido.');
+                    alert('Erro ao ler o arquivo. Verifique se e um arquivo .json valido.');
                     console.error("Erro ao importar:", error);
                 }
             };
@@ -84,14 +77,14 @@ function setupUniversalImporter() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initAdminScriptsModule();
-    initAdminToolsModule();
+    initAdminTermsModule();
     initAdminSettingsModule();
     
     setupLogout();
-    setupUniversalImporter(); // <-- Chama a nova função
+    setupUniversalImporter();
 
     document.addEventListener('scriptsUpdated', updateStats);
-    document.addEventListener('toolsUpdated', updateStats);
+    document.addEventListener('termsUpdated', updateStats);
     
     setupListeners();
 });

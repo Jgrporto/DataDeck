@@ -50,6 +50,16 @@ export function listenForTools(callback) {
 }
 
 /**
+ * Escuta por mudancas em tempo real na colecao de termos.
+ */
+export function listenForTerms(callback) {
+    db.collection('terms').onSnapshot(snapshot => {
+        const terms = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        callback(terms);
+    });
+}
+
+/**
  * Escuta por mudanças em tempo real no documento de anotações.
  */
 export function listenForNotes(callback) {
@@ -87,6 +97,18 @@ export async function updateToolInDB(toolId, toolData) {
 }
 export async function deleteToolFromDB(toolId) {
     await db.collection('tools').doc(toolId).delete();
+}
+
+// Funcoes para TERMOS
+export async function saveTermInDB(termData) {
+    const docRef = await db.collection('terms').add(termData);
+    return docRef.id;
+}
+export async function updateTermInDB(termId, termData) {
+    await db.collection('terms').doc(termId).update(termData);
+}
+export async function deleteTermFromDB(termId) {
+    await db.collection('terms').doc(termId).delete();
 }
 
 // Funções para ANOTAÇÕES

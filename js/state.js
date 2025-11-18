@@ -5,6 +5,7 @@ import * as firebaseService from './firebaseService.js';
 // --- Cache Local de Dados (será atualizado em tempo real pela nuvem) ---
 let scriptsData = [];
 let toolsData = [];
+let termsData = [];
 let anotacoesData = '';
 
 // --- Funções Auxiliares para o localStorage ---
@@ -19,6 +20,7 @@ function saveLocalData(key, data) {
 // --- Getters: Funções para a UI ler os dados (nuvem + local) ---
 export const getScriptsForView = () => [...scriptsData, ...getLocalData('local_scripts')];
 export const getToolsForView = () => [...toolsData, ...getLocalData('local_tools')];
+export const getTermsForView = () => [...termsData, ...getLocalData('local_terms')];
 export const getAnotacoes = () => anotacoesData;
 
 // --- Função de Setup dos Listeners ---
@@ -30,6 +32,10 @@ export function setupListeners() {
     firebaseService.listenForTools(newTools => {
         toolsData = newTools;
         document.dispatchEvent(new Event('toolsUpdated'));
+    });
+    firebaseService.listenForTerms(newTerms => {
+        termsData = newTerms;
+        document.dispatchEvent(new Event('termsUpdated'));
     });
     firebaseService.listenForNotes(newNotes => {
         anotacoesData = newNotes;
@@ -54,6 +60,13 @@ function addToolLocally(toolObject) {
     saveLocalData('local_tools', localTools);
     document.dispatchEvent(new Event('toolsUpdated'));
 }
+function addTermLocally(termObject) {
+    const localTerms = getLocalData('local_terms');
+    const newLocalTerm = { ...termObject, id: `local_${Date.now()}` };
+    localTerms.push(newLocalTerm);
+    saveLocalData('local_terms', localTerms);
+    document.dispatchEvent(new Event('termsUpdated'));
+}
 
 // --- Funções de Adição (Agora sempre locais) ---
 export async function addScript(scriptObject) {
@@ -61,6 +74,9 @@ export async function addScript(scriptObject) {
 }
 export async function addTool(toolObject) {
     addToolLocally(toolObject);
+}
+export async function addTerm(termObject) {
+    addTermLocally(termObject);
 }
 
 // --- Função de Importação (Sempre local) ---
@@ -101,6 +117,22 @@ export function importToolsLocally(toolsToImport) {
     saveLocalData('local_tools', localTools);
     document.dispatchEvent(new Event('toolsUpdated'));
 }
+export function importTermsLocally(termsToImport) {
+    const localTerms = getLocalData('local_terms');
+    const timestamp = Date.now();
+    termsToImport.forEach((term, index) => {
+        const newLocalTerm = {
+            title: term.title || 'Sem titulo',
+            body: term.body || '',
+            variables: Array.isArray(term.variables) ? term.variables : [],
+            isDeletable: true,
+            id: `local_${timestamp}_${index}`
+        };
+        localTerms.push(newLocalTerm);
+    });
+    saveLocalData('local_terms', localTerms);
+    document.dispatchEvent(new Event('termsUpdated'));
+}
 
 // --- Funções de Update (Inteligentes) ---
 export async function updateScript(scriptId, scriptObject) {
@@ -130,6 +162,19 @@ export async function updateTool(toolId, toolObject) {
         await firebaseService.updateToolInDB(toolId, toolObject);
     }
 }
+export async function updateTerm(termId, termObject) {
+    if (String(termId).startsWith('local_')) {
+        const localTerms = getLocalData('local_terms');
+        const index = localTerms.findIndex(t => t.id === termId);
+        if (index !== -1) {
+            localTerms[index] = { ...localTerms[index], ...termObject };
+            saveLocalData('local_terms', localTerms);
+            document.dispatchEvent(new Event('termsUpdated'));
+        }
+    } else {
+        await firebaseService.updateTermInDB(termId, termObject);
+    }
+}
 
 // --- Funções de Deleção (Inteligentes) ---
 export async function deleteScript(scriptId) {
@@ -153,6 +198,16 @@ export async function deleteTool(toolId) {
         await firebaseService.deleteToolFromDB(toolId);
     }
 }
+export async function deleteTerm(termId) {
+    if (String(termId).startsWith('local_')) {
+        let localTerms = getLocalData('local_terms');
+        localTerms = localTerms.filter(t => t.id !== termId);
+        saveLocalData('local_terms', localTerms);
+        document.dispatchEvent(new Event('termsUpdated'));
+    } else {
+        await firebaseService.deleteTermFromDB(termId);
+    }
+}
 
 // --- Funções de Anotações e Sincronização ---
 export async function saveAnotacoes(notes) {
@@ -162,6 +217,7 @@ export async function saveAnotacoes(notes) {
 export async function syncLocalDataToFirebase() {
     const localScripts = getLocalData('local_scripts');
     const localTools = getLocalData('local_tools');
+    const localTerms = getLocalData('local_terms');
     let itemsSynced = 0;
 
     // Envia todos os scripts locais para o Firebase
@@ -176,15 +232,22 @@ export async function syncLocalDataToFirebase() {
         await firebaseService.saveToolInDB(toolData);
         itemsSynced++;
     }
+    for (const term of localTerms) {
+        const { id, ...termData } = term;
+        await firebaseService.saveTermInDB(termData);
+        itemsSynced++;
+    }
 
     if (itemsSynced > 0) {
         localStorage.removeItem('local_scripts');
         localStorage.removeItem('local_tools');
+        localStorage.removeItem('local_terms');
 
         // AVISA A INTERFACE QUE A LISTA LOCAL MUDOU (FICOU VAZIA)
         // Isso força o redesenho da tabela e das estatísticas.
         document.dispatchEvent(new Event('scriptsUpdated'));
         document.dispatchEvent(new Event('toolsUpdated'));
+        document.dispatchEvent(new Event('termsUpdated'));
     }
     return itemsSynced;
 }

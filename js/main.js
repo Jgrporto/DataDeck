@@ -3,7 +3,7 @@
 import { checkAuth } from './auth.js';
 import { setupListeners } from './state.js';
 import { initScriptsModule } from './modules/scripts.js';
-import { initToolsModule } from './modules/tools.js';
+import { initTermsModule } from './modules/terms.js';
 import { initSettingsModule } from './modules/settings.js';
 import { initAnalysisModule } from './modules/analysis.js';
 import { initUserInterface } from './ui.js';
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 2. Inicializa os módulos de cada seção
     initScriptsModule();
-    initToolsModule();
+    initTermsModule();
     initSettingsModule();
     initAnalysisModule();
 

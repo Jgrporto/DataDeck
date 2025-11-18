@@ -18,7 +18,7 @@
     <div class="header-actions">
         <button id="universal-import-btn" class="btn btn-secondary"><i class="fas fa-file-import"></i> Importar Arquivo</button>
         <button id="sync-btn" class="btn"><i class="fas fa-sync"></i> Sincronizar <span id="local-scripts-count" class="badge">0</span></button>
-        <button id="add-tool-btn" class="btn btn-secondary"><i class="fas fa-plus"></i> Add Ferramenta</button>
+        <button id="add-term-btn" class="btn btn-secondary"><i class="fas fa-plus"></i> Add Termo</button>
         <button id="add-script-btn" class="btn"><i class="fas fa-plus"></i> Add Script</button>
     </div>
     <div class="header-profile">
@@ -41,11 +41,11 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Título</th>
-                            <th>Descrição</th>
+                            <th>Titulo</th>
+                            <th>Descricao</th>
                             <th>Status</th>
                             <th>Favorito</th>
-                            <th>Ações</th>
+                            <th>Acoes</th>
                         </tr>
                     </thead>
                     <tbody id="scripts-table-body"></tbody>
@@ -55,20 +55,19 @@
 
         <div class="dashboard-widget widget-table">
             <div class="widget-header">
-                <h2><i class="fas fa-tools"></i> Gerenciar Ferramentas</h2>
-                <input type="search" id="admin-search-tools" placeholder="Buscar ferramentas...">
+                <h2><i class="fas fa-file-alt"></i> Gerenciar Termos</h2>
+                <input type="search" id="admin-search-terms" placeholder="Buscar termos...">
             </div>
             <div class="admin-table-wrapper">
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>Categoria</th>
-                            <th>URL</th>
-                            <th>Ações</th>
+                            <th>Titulo</th>
+                            <th>Variaveis</th>
+                            <th>Acoes</th>
                         </tr>
                     </thead>
-                    <tbody id="tools-table-body"></tbody>
+                    <tbody id="terms-table-body"></tbody>
                 </table>
             </div>
         </div>
@@ -77,7 +76,7 @@
     <aside class="dashboard-side-col">
         <div class="dashboard-widget">
             <div class="widget-header">
-                <h2><i class="fas fa-chart-bar"></i> Estatísticas</h2>
+                <h2><i class="fas fa-chart-bar"></i> Estatisticas</h2>
             </div>
             <div class="settings-content">
                 <div class="stats-grid">
@@ -90,19 +89,19 @@
                         <span class="stat-label">Scripts Locais</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-value" id="stats-cloud-tools">...</span>
-                        <span class="stat-label">Ferramentas</span>
+                        <span class="stat-value" id="stats-terms-total">...</span>
+                        <span class="stat-label">Termos</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="dashboard-widget">
             <div class="widget-header">
-                <h2><i class="fas fa-cog"></i> Configurações</h2>
+                <h2><i class="fas fa-cog"></i> Configuracoes</h2>
             </div>
             <div class="settings-content">
                 <details class="setting-group" open>
-                    <summary><h3>Aparência e Tema</h3></summary>
+                    <summary><h3>Aparencia e Tema</h3></summary>
                     <div class="setting-item-group">
                         <div class="setting-item">
                             <label for="dark-mode-toggle">Modo Escuro</label>
@@ -114,21 +113,33 @@
                     </div>
                 </details>
                 <details class="setting-group">
-                    <summary><h3>Configurações da Aplicação</h3></summary>
+                    <summary><h3>Configuracoes da Aplicacao</h3></summary>
                     <div class="setting-item-group">
                         <div class="setting-item-column">
-                            <label for="iframe-url-input">URL da Página de Análise</label>
+                            <label for="iframe-url-input">URL da Pagina de Analise</label>
                             <input type="url" id="iframe-url-input" class="admin-input" placeholder="https://exemplo.com">
                             <button id="save-iframe-url-btn" class="btn btn-small">Salvar URL</button>
                         </div>
                     </div>
                 </details>
-                <details class="setting-group danger-zone">
-                    <summary><h3><i class="fas fa-exclamation-triangle"></i> Zona de Perigo</h3></summary>
+                <details class="setting-group">
+                    <summary><h3>Seguranca</h3></summary>
                     <div class="setting-item-group">
                         <div class="setting-item">
-                            <label>Reset Geral Local</label>
-                            <button id="factory-reset-btn" class="btn btn-danger btn-small">Resetar</button>
+                            <button id="factory-reset-btn" class="btn btn-secondary full-width">Resetar Dados Locais</button>
+                        </div>
+                    </div>
+                </details>
+                <details class="setting-group">
+                    <summary><h3>Anotacoes</h3></summary>
+                    <div class="setting-item-group">
+                        <div class="setting-item">
+                            <label for="anotacoes-textarea">Bloco de Anotacoes</label>
+                            <textarea id="anotacoes-textarea" rows="4" placeholder="Escreva aqui..."></textarea>
+                            <div class="actions">
+                                <button id="copiar-anotacoes-btn" class="btn btn-small">Copiar</button>
+                                <button id="limpar-anotacoes-btn" class="btn btn-secondary btn-small">Limpar</button>
+                            </div>
                         </div>
                     </div>
                 </details>
@@ -137,23 +148,20 @@
     </aside>
 </main>
 
-<input type="file" id="universal-import-input" style="display: none;" accept=".json">
-<input type="file" id="import-theme-input" style="display: none;" accept=".json">
-
 <div id="add-script-modal" class="modal-overlay">
     <div class="modal-content">
         <h2>Adicionar Novo Script</h2>
         <form id="add-script-form">
             <div class="form-group">
-                <label for="script-title">Título</label>
+                <label for="script-title">Titulo</label>
                 <input type="text" id="script-title" required>
             </div>
             <div class="form-group">
-                <label for="script-description">Descrição</label>
+                <label for="script-description">Descricao</label>
                 <textarea id="script-description" rows="2" required></textarea>
             </div>
             <div class="form-group">
-                <label for="script-code">Código</label>
+                <label for="script-code">Codigo</label>
                 <textarea id="script-code" rows="8" required></textarea>
             </div>
             <div class="form-actions">
@@ -164,43 +172,38 @@
     </div>
 </div>
 
-<div id="add-tool-modal" class="modal-overlay">
+<div id="add-term-modal" class="modal-overlay">
     <div class="modal-content">
-        <h2 id="tool-modal-title">Adicionar Nova Ferramenta</h2>
-        <form id="add-tool-form">
+        <h2 id="term-modal-title">Adicionar Termo</h2>
+        <form id="add-term-form">
             <div class="form-group">
-                <label for="tool-name">Nome da Ferramenta</label>
-                <input type="text" id="tool-name" required>
+                <label for="term-title">Titulo do Termo</label>
+                <input type="text" id="term-title" required>
             </div>
             <div class="form-group">
-                <label for="tool-url">Link (URL)</label>
-                <input type="url" id="tool-url" required>
+                <label for="term-body">Texto do Termo (use "XXX" onde houver variaveis)</label>
+                <textarea id="term-body" rows="8" required></textarea>
             </div>
             <div class="form-group">
-                <label for="tool-description">Descrição Curta</label>
-                <textarea id="tool-description" rows="2" required></textarea>
-            </div>
-            <div class="form-group icon-upload-group">
-                <div class="icon-upload-label-wrapper">
-                    <label>Ícone da Ferramenta (opcional)</label>
-                    <label for="tool-icon-input" class="btn btn-secondary file-upload-btn">
-                        <i class="fas fa-upload"></i> Escolher arquivo
-                    </label>
-                    <input type="file" id="tool-icon-input" accept="image/*" style="display: none;">
-                </div>
-                <img id="tool-icon-preview" src="" alt="" class="tool-icon-preview hidden">
-            </div>
-            <div class="form-group">
-                <label for="tool-category">Categoria</label>
-                <select id="tool-category" required>
-                    <option value="monitoramento">Monitoramento</option>
-                    <option value="consulta">Consulta e Dúvidas</option>
-                    <option value="atendimento">Atendimento</option>
-                </select>
+                <label for="term-variables">Nomes das variaveis (separados por virgula, na ordem em que aparecem)</label>
+                <input type="text" id="term-variables" placeholder="Ex: Nome do cliente, CPF">
             </div>
             <div class="form-actions">
-                <button type="button" id="cancel-tool-btn" class="btn btn-secondary">Cancelar</button>
-                <button type="submit" class="btn">Salvar Ferramenta</button>
+                <button type="button" id="cancel-term-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Salvar Termo</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="fill-term-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2>Preencher variaveis</h2>
+        <form id="fill-term-form">
+            <div id="fill-term-fields"></div>
+            <div class="form-actions">
+                <button type="button" id="cancel-fill-term-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Gerar termo</button>
             </div>
         </form>
     </div>
