@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataDeck - Suporte Técnico</title>
+    <title>DataDeck - Suporte Tecnico</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="DataImages/DataDeck_icon.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/5c5c88297c.js" crossorigin="anonymous"></script>
@@ -19,16 +19,16 @@
             <i class="fas fa-file-code nav-icon"></i>
             <span class="nav-text">Biblioteca</span>
         </a>
-        <a href="#" id="nav-analise" class="nav-link" title="Análise de Desconto">
+        <a href="#" id="nav-analise" class="nav-link" title="Analise de Desconto">
             <i class="fas fa-chart-pie nav-icon"></i>
-            <span class="nav-text">Análise</span>
+            <span class="nav-text">Analise</span>
         </a>
         <a href="#" id="nav-termos" class="nav-link" title="Termos">
             <i class="fas fa-file-alt nav-icon"></i>
             <span class="nav-text">Termos</span>
         </a>
     </nav>
-    <button id="profile-btn" class="profile-button" title="Perfil e Configurações">
+    <button id="profile-btn" class="profile-button" title="Perfil e Configuracoes">
         <img id="navbar-profile-pic" src="DataImages/UserID.png" alt="Foto do Perfil">
     </button>
 </header>
@@ -45,7 +45,7 @@
             <div class="scripts-list">
                 <div class="scripts-list-header">
                     <h2>Scripts Salvos</h2>
-                    <input type="search" id="search-input" placeholder="Buscar por título ou descrição...">
+                    <input type="search" id="search-input" placeholder="Buscar por titulo ou descricao...">
                     <div class="import-export-actions">
                         <button id="export-btn" class="btn btn-secondary"><i class="fas fa-file-download"></i> Exportar</button>
                         <button id="import-btn" class="btn btn-secondary"><i class="fas fa-file-upload"></i> Importar</button>
@@ -60,7 +60,7 @@
             <div class="script-content">
                 <h2>Detalhes do Script</h2>
                 <div id="script-display">
-                    <p>Selecione um script da lista para ver o conteúdo aqui.</p>
+                    <p>Selecione um script da lista para ver o conteudo aqui.</p>
                 </div>
             </div>
         </div>
@@ -70,19 +70,19 @@
     <main id="analise-section" class="page-section" style="display: none;">
         <div class="container">
             <div class="page-header">
-                <h1>Análise de Desconto</h1>
+                <h1>Analise de Desconto</h1>
             </div>
             <div class="analise-layout">
                 <div class="texto-fixo-coluna">
-                    <h2><i class="fas fa-book-open"></i> Caderno de Anotações</h2>
-                    <textarea id="anotacoes-textarea" placeholder="Suas anotações são salvas automaticamente..."></textarea>
+                    <h2><i class="fas fa-book-open"></i> Caderno de Anotacoes</h2>
+                    <textarea id="anotacoes-textarea" placeholder="Suas anotacoes sao salvas automaticamente..."></textarea>
                     <div class="anotacoes-actions">
                         <button id="copiar-anotacoes-btn" class="btn"><i class="fas fa-copy"></i> Copiar Tudo</button>
                         <button id="limpar-anotacoes-btn" class="btn btn-secondary"><i class="fas fa-eraser"></i> Limpar</button>
                     </div>
                 </div>
                 <div class="iframe-coluna">
-                    <iframe id="analise-iframe" src="https://atendimento.emexinternet.com.br" title="Análise de Desconto"></iframe>
+                    <iframe id="analise-iframe" src="https://atendimento.emexinternet.com.br" title="Analise de Desconto"></iframe>
                 </div>
             </div>
         </div>
@@ -129,11 +129,11 @@
                 </label>
                 <input type="file" id="profile-pic-input" accept="image/*" style="display: none;">
             </div>
-            <h3 id="sidebar-username">Suporte Técnico</h3>
+            <h3 id="sidebar-username">Suporte Tecnico</h3>
         </div>
 
         <div class="setting-group">
-            <h3>Aparência</h3>
+            <h3>Aparencia</h3>
             <div class="setting-item-group">
                 <div class="setting-item">
                     <label for="user-dark-mode-toggle">Modo Escuro</label>
@@ -146,8 +146,11 @@
         </div>
 
         <div class="setting-group">
-            <h3>Sessão</h3>
+            <h3>Sessao</h3>
             <div class="setting-item-group">
+                <button id="send-request-btn" class="btn" style="width: 100%; margin-bottom: 10px;">
+                    <i class="fas fa-paper-plane"></i> Enviar Requisicao
+                </button>
                  <button id="user-logout-btn" class="btn btn-secondary" style="width: 100%;">
                     <i class="fas fa-sign-out-alt"></i> Sair
                 </button>
@@ -161,15 +164,15 @@
         <h2 id="term-modal-title">Adicionar Termo</h2>
         <form id="add-term-form">
             <div class="form-group">
-                <label for="term-title">Título do Termo</label>
+                <label for="term-title">Titulo do Termo</label>
                 <input type="text" id="term-title" required>
             </div>
             <div class="form-group">
-                <label for="term-body">Texto do Termo (use "XXX" onde houver variáveis)</label>
+                <label for="term-body">Texto do Termo (use "XXX" onde houver variaveis)</label>
                 <textarea id="term-body" rows="8" required></textarea>
             </div>
             <div class="form-group">
-                <label for="term-variables">Nomes das variáveis (separados por vírgula, na ordem em que aparecem)</label>
+                <label for="term-variables">Nomes das variaveis (separados por virgula, na ordem em que aparecem)</label>
                 <input type="text" id="term-variables" placeholder="Ex: Nome do cliente, CPF">
             </div>
             <div class="modal-actions">
@@ -182,7 +185,7 @@
 
 <div id="fill-term-modal" class="modal-overlay">
     <div class="modal-content">
-        <h2>Preencher variáveis</h2>
+        <h2>Preencher variaveis</h2>
         <form id="fill-term-form">
             <div id="fill-term-fields"></div>
             <div class="modal-actions">
@@ -198,15 +201,15 @@
         <h2>Adicionar Novo Script</h2>
         <form id="add-script-form">
             <div class="form-group">
-                <label for="script-title">Título</label>
+                <label for="script-title">Titulo</label>
                 <input type="text" id="script-title" required>
             </div>
             <div class="form-group">
-                <label for="script-description">Descrição</label>
+                <label for="script-description">Descricao</label>
                 <textarea id="script-description" rows="2" required></textarea>
             </div>
             <div class="form-group">
-                <label for="script-code">Código</label>
+                <label for="script-code">Codigo</label>
                 <textarea id="script-code" rows="8" required></textarea>
             </div>
             <div class="form-actions">
@@ -230,12 +233,12 @@
                 <input type="url" id="tool-url" required>
             </div>
             <div class="form-group">
-                <label for="tool-description">Descrição Curta</label>
+                <label for="tool-description">Descricao Curta</label>
                 <textarea id="tool-description" rows="2" required></textarea>
             </div>
             <div class="form-group icon-upload-group">
                 <div class="icon-upload-label-wrapper">
-                    <label>Ícone da Ferramenta (opcional)</label>
+                    <label>Icone da Ferramenta (opcional)</label>
                     <label for="tool-icon-input" class="btn btn-secondary file-upload-btn">
                         <i class="fas fa-upload"></i> Escolher arquivo
                     </label>
@@ -247,7 +250,7 @@
                 <label for="tool-category">Categoria</label>
                 <select id="tool-category" required>
                     <option value="monitoramento">Monitoramento</option>
-                    <option value="consulta">Consulta e Dúvidas</option>
+                    <option value="consulta">Consulta e Duvidas</option>
                     <option value="atendimento">Atendimento</option>
                 </select>
             </div>

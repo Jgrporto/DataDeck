@@ -30,10 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (matched) {
                 const role = matched.role || 'user';
                 const displayName = matched.displayName || matched.username || 'Atendente';
+                const avatar = matched.avatar || '';
 
                 sessionStorage.setItem('isLoggedIn', 'true');
                 sessionStorage.setItem('userRole', role);
                 sessionStorage.setItem('userName', displayName);
+                if (avatar) sessionStorage.setItem('userAvatar', avatar);
                 sessionStorage.setItem('userId', matched.id);
 
                 window.location.href = role === 'admin' ? 'admin.html' : 'app.html';

@@ -1,58 +1,47 @@
-/* CÓDIGO FINAL E COMPLETO PARA: js/modules/settings.js */
+/* Configurações e painel do usuário/admin */
 
 import {
-    // Seletores do Painel de Usuário
+    // Usuário (app.html)
     settingsPanel, closeSettingsBtn, profileBtn,
     userDarkModeToggle, userLogoutBtn,
-    navbarProfilePic, sidebarProfilePic, profilePicInput,
-    // Seletores do Painel de Admin
+    navbarProfilePic, sidebarProfilePic, profilePicInput, sidebarUsername, sendRequestBtn,
+    // Admin (admin.html)
     darkModeToggle, factoryResetBtn, iframeUrlInput, saveIframeUrlBtn
 } from '../dom.js';
-
-// ==================================================================
-// FUNÇÕES AUXILIARES (COMPARTILHADAS)
-// ==================================================================
+import { getLocalDrafts, sendPublishRequest } from '../state.js';
 
 function applySavedTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.documentElement.setAttribute('data-theme', savedTheme);
-    
-    // Atualiza o estado dos interruptores em ambas as páginas
+
     const userToggle = document.getElementById('user-dark-mode-toggle');
     const adminToggle = document.getElementById('dark-mode-toggle');
-
     if (userToggle) userToggle.checked = (savedTheme === 'dark');
     if (adminToggle) adminToggle.checked = (savedTheme === 'dark');
 }
 
-// ==================================================================
-// INICIALIZADOR PARA PÁGINA DE USUÁRIO (app.html)
-// ==================================================================
 export function initSettingsModule() {
-    if (!document.getElementById('settings-panel')) return; // Só roda no app.html
-    
+    if (!document.getElementById('settings-panel')) return;
+
     applySavedTheme();
 
-    function loadProfilePicture() {
-        const savedPic = localStorage.getItem('dataDeckProfilePic');
-        if (savedPic) {
-            if (navbarProfilePic) navbarProfilePic.src = savedPic;
-            if (sidebarProfilePic) sidebarProfilePic.src = savedPic;
-        }
-    }
-    loadProfilePicture();
+    const sessionAvatar = sessionStorage.getItem('userAvatar');
+    const savedPic = sessionAvatar || localStorage.getItem('dataDeckProfilePic');
+    if (navbarProfilePic && savedPic) navbarProfilePic.src = savedPic;
+    if (sidebarProfilePic && savedPic) sidebarProfilePic.src = savedPic;
 
-    // Lógica para abrir/fechar o painel lateral
+    const savedUserName = sessionStorage.getItem('userName');
+    if (savedUserName && sidebarUsername) sidebarUsername.textContent = savedUserName;
+
     if (profileBtn) profileBtn.addEventListener('click', () => settingsPanel.classList.toggle('open'));
     if (closeSettingsBtn) closeSettingsBtn.addEventListener('click', () => settingsPanel.classList.remove('open'));
     document.addEventListener('click', (event) => {
-        if (settingsPanel && profileBtn && settingsPanel.classList.contains('open') && 
+        if (settingsPanel && profileBtn && settingsPanel.classList.contains('open') &&
             !settingsPanel.contains(event.target) && !profileBtn.contains(event.target)) {
             settingsPanel.classList.remove('open');
         }
     });
 
-    // Lógica do Modo Escuro para usuário
     if (userDarkModeToggle) {
         userDarkModeToggle.addEventListener('change', (e) => {
             const newTheme = e.target.checked ? 'dark' : 'light';
@@ -61,7 +50,6 @@ export function initSettingsModule() {
         });
     }
 
-    // Lógica do Logout para usuário
     if (userLogoutBtn) {
         userLogoutBtn.addEventListener('click', () => {
             if (confirm('Tem certeza que deseja sair?')) {
@@ -71,7 +59,7 @@ export function initSettingsModule() {
         });
     }
 
-    // Lógica para upload da foto de perfil
+    // Upload local ainda permitido para fallback, mas avatar oficial vem do admin
     if (sidebarProfilePic && profilePicInput) {
         sidebarProfilePic.parentElement.addEventListener('click', () => profilePicInput.click());
         profilePicInput.addEventListener('change', (event) => {
@@ -81,23 +69,47 @@ export function initSettingsModule() {
                 reader.onload = (e) => {
                     const imageDataUrl = e.target.result;
                     localStorage.setItem('dataDeckProfilePic', imageDataUrl);
-                    loadProfilePicture();
-                }
+                    if (navbarProfilePic) navbarProfilePic.src = imageDataUrl;
+                    if (sidebarProfilePic) sidebarProfilePic.src = imageDataUrl;
+                };
                 reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    // Botão que envia requisição de publicação para os admins
+    if (sendRequestBtn) {
+        sendRequestBtn.addEventListener('click', async () => {
+            const drafts = getLocalDrafts();
+            const totalItems = drafts.scripts.length + drafts.terms.length + drafts.tools.length;
+            if (totalItems === 0) {
+                alert('Nenhum item local para enviar.');
+                return;
+            }
+            const createdBy = sessionStorage.getItem('userName') || 'Atendente';
+            const createdById = sessionStorage.getItem('userId') || 'desconhecido';
+            try {
+                await sendPublishRequest({
+                    createdBy,
+                    createdById,
+                    scripts: drafts.scripts,
+                    terms: drafts.terms,
+                    tools: drafts.tools
+                });
+                alert('Requisição enviada para aprovação do admin.');
+            } catch (err) {
+                console.error('Erro ao enviar requisição', err);
+                alert('Falha ao enviar requisição. Tente novamente.');
             }
         });
     }
 }
 
-// ==================================================================
-// INICIALIZADOR PARA O WIDGET DE ADMIN (admin.html)
-// ==================================================================
 export function initAdminSettingsModule() {
-    if (!document.querySelector('.dashboard-side-col')) return; // Só roda no admin.html
+    if (!document.querySelector('.dashboard-side-col')) return;
 
     applySavedTheme();
 
-    // Listener para o interruptor de Modo Escuro do admin
     if (darkModeToggle) {
         darkModeToggle.addEventListener('change', (e) => {
             const newTheme = e.target.checked ? 'dark' : 'light';
@@ -106,7 +118,6 @@ export function initAdminSettingsModule() {
         });
     }
 
-    // Carrega e salva a URL do iframe
     const savedIframeUrl = localStorage.getItem('dataDeckIframeUrl');
     if (iframeUrlInput && savedIframeUrl) {
         iframeUrlInput.value = savedIframeUrl;
@@ -121,7 +132,6 @@ export function initAdminSettingsModule() {
         });
     }
 
-    // Listener para o botão de Reset Geral
     if (factoryResetBtn) {
         factoryResetBtn.addEventListener('click', () => {
             if (confirm('ATENÇÃO! Certeza que deseja apagar os dados locais?')) {

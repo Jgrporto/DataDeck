@@ -20,6 +20,7 @@ function openUserModal(user) {
     document.getElementById('user-username').value = user?.username || '';
     document.getElementById('user-password').value = user?.password || '';
     document.getElementById('user-role').value = user?.role || 'user';
+    document.getElementById('user-avatar').value = user?.avatar || '';
 
     modal.classList.add('visible');
 }
@@ -85,6 +86,7 @@ export function initAdminUsersModule() {
                 username: document.getElementById('user-username').value,
                 password: document.getElementById('user-password').value,
                 role: document.getElementById('user-role').value,
+                avatar: document.getElementById('user-avatar').value,
                 isDeletable: true
             };
             if (isEditingUser) {

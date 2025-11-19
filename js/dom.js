@@ -22,6 +22,7 @@ export const navbarProfilePic = document.getElementById('navbar-profile-pic');
 export const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
 export const profilePicInput = document.getElementById('profile-pic-input');
 export const sidebarUsername = document.getElementById('sidebar-username');
+export const sendRequestBtn = document.getElementById('send-request-btn');
 export const addScriptPageBtn = document.getElementById('add-script-page-btn');
 export const addTermBtn = document.getElementById('add-term-btn');
 export const exportBtn = document.getElementById('export-btn');

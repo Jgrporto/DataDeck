@@ -21,6 +21,7 @@
         <button id="add-term-btn" class="btn btn-secondary"><i class="fas fa-plus"></i> Add Termo</button>
         <button id="add-script-btn" class="btn"><i class="fas fa-plus"></i> Add Script</button>
         <button id="add-user-btn" class="btn btn-secondary"><i class="fas fa-user-plus"></i> Add Login</button>
+        <button id="requests-indicator" class="btn btn-secondary"><i class="fas fa-inbox"></i> MailBox <span id="requests-badge" class="badge">0</span></button>
     </div>
     <div class="header-profile">
         <span>Admin</span>
@@ -89,6 +90,26 @@
                         </tr>
                     </thead>
                     <tbody id="users-table-body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="requests-widget" class="dashboard-widget widget-table">
+            <div class="widget-header">
+                <h2><i class="fas fa-inbox"></i> Requisições Pendentes</h2>
+                <input type="search" id="admin-search-requests" placeholder="Filtrar... (autor ou status)">
+            </div>
+            <div class="admin-table-wrapper">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Autor</th>
+                            <th>Data</th>
+                            <th>Itens</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="requests-table-body"></tbody>
                 </table>
             </div>
         </div>
@@ -238,6 +259,10 @@
                 <input type="text" id="user-password" required>
             </div>
             <div class="form-group">
+                <label for="user-avatar">Avatar (URL)</label>
+                <input type="url" id="user-avatar" placeholder="https://exemplo.com/foto.png">
+            </div>
+            <div class="form-group">
                 <label for="user-role">Papel</label>
                 <select id="user-role">
                     <option value="user">Usuário</option>
@@ -249,6 +274,18 @@
                 <button type="submit" class="btn">Salvar Login</button>
             </div>
         </form>
+    </div>
+</div>
+
+<div id="request-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2>Detalhes da Requisição</h2>
+        <p id="request-info"></p>
+        <ul id="request-items-list"></ul>
+        <div class="form-actions">
+            <button type="button" id="close-request-modal-btn" class="btn btn-secondary">Fechar</button>
+            <button type="button" id="approve-request-btn" class="btn">Aprovar e Publicar</button>
+        </div>
     </div>
 </div>
 

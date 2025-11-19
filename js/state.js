@@ -7,6 +7,7 @@ let scriptsData = [];
 let toolsData = [];
 let termsData = [];
 let usersData = [];
+let requestsData = [];
 let anotacoesData = '';
 
 // --- Funções Auxiliares para o localStorage ---
@@ -23,6 +24,7 @@ export const getScriptsForView = () => [...scriptsData, ...getLocalData('local_s
 export const getToolsForView = () => [...toolsData, ...getLocalData('local_tools')];
 export const getTermsForView = () => [...termsData, ...getLocalData('local_terms')];
 export const getUsersForView = () => [...usersData, ...getLocalData('local_users')];
+export const getRequestsForView = () => [...requestsData];
 export const getAnotacoes = () => anotacoesData;
 
 // --- Função de Setup dos Listeners ---
@@ -42,6 +44,10 @@ export function setupListeners() {
     firebaseService.listenForUsers(newUsers => {
         usersData = newUsers;
         document.dispatchEvent(new Event('usersUpdated'));
+    });
+    firebaseService.listenForRequests(newRequests => {
+        requestsData = newRequests;
+        document.dispatchEvent(new Event('requestsUpdated'));
     });
     firebaseService.listenForNotes(newNotes => {
         anotacoesData = newNotes;
@@ -80,6 +86,14 @@ function addUserLocally(userObject) {
     saveLocalData('local_users', localUsers);
     document.dispatchEvent(new Event('usersUpdated'));
 }
+export function getLocalDrafts() {
+    return {
+        scripts: getLocalData('local_scripts'),
+        terms: getLocalData('local_terms'),
+        tools: getLocalData('local_tools'),
+        users: getLocalData('local_users')
+    };
+}
 
 // --- Funções de Adição (Agora sempre locais) ---
 export async function addScript(scriptObject) {
@@ -93,6 +107,15 @@ export async function addTerm(termObject) {
 }
 export async function addUser(userObject) {
     addUserLocally(userObject);
+}
+
+export async function sendPublishRequest(requestPayload) {
+    const prepared = {
+        ...requestPayload,
+        status: 'pending',
+        createdAt: new Date().toISOString()
+    };
+    await firebaseService.saveRequestInDB(prepared);
 }
 
 // --- Função de Importação (Sempre local) ---
@@ -263,6 +286,30 @@ export async function deleteUser(userId) {
     } else {
         await firebaseService.deleteUserFromDB(userId);
     }
+}
+
+// Aprova e publica dados de uma requisicao
+export async function approveRequest(request) {
+    const { scripts = [], terms = [], tools = [], users = [] } = request;
+
+    for (const script of scripts) {
+        const { id, ...data } = script;
+        await firebaseService.saveScriptInDB(data);
+    }
+    for (const term of terms) {
+        const { id, ...data } = term;
+        await firebaseService.saveTermInDB(data);
+    }
+    for (const tool of tools) {
+        const { id, ...data } = tool;
+        await firebaseService.saveToolInDB(data);
+    }
+    for (const user of users) {
+        const { id, ...data } = user;
+        await firebaseService.saveUserInDB(data);
+    }
+
+    await firebaseService.updateRequestInDB(request.id, { status: 'approved', processedAt: new Date().toISOString() });
 }
 
 // --- Funções de Anotações e Sincronização ---

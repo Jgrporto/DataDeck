@@ -1,0 +1,38 @@
+<div id="add-user-modal" class="modal-overlay">
+    <div class="modal-content">
+        <h2 id="user-modal-title">Adicionar Login</h2>
+        <form id="add-user-form">
+            <div class="form-group">
+                <label for="user-display-name">Nome do atendente</label>
+                <input type="text" id="user-display-name" required>
+            </div>
+            <div class="form-group">
+                <label for="user-username">UsuÃ¡rio</label>
+                <input type="text" id="user-username" required>
+            </div>
+            <div class="form-group">
+                <label for="user-password">Senha</label>
+                <input type="text" id="user-password" required>
+            </div>
+            <div class="form-group">
+                <label for="user-avatar">Avatar (URL)</label>
+                <input type="url" id="user-avatar" placeholder="https://exemplo.com/foto.png">
+            </div>
+            <div class="form-group">
+                <label for="user-avatar">Avatar (URL)</label>
+                <input type="url" id="user-avatar" placeholder="https://exemplo.com/foto.png">
+            </div>
+            <div class="form-group">
+                <label for="user-role">Papel</label>
+                <select id="user-role">
+                    <option value="user">UsuÃ¡rio</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" id="cancel-user-btn" class="btn btn-secondary">Cancelar</button>
+                <button type="submit" class="btn">Salvar Login</button>
+            </div>
+        </form>
+    </div>
+</div>

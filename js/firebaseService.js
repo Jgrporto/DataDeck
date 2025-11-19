@@ -70,6 +70,16 @@ export function listenForUsers(callback) {
 }
 
 /**
+ * Escuta por mudancas em tempo real nas requisicoes de publicacao.
+ */
+export function listenForRequests(callback) {
+    db.collection('requests').onSnapshot(snapshot => {
+        const requests = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        callback(requests);
+    });
+}
+
+/**
  * Escuta por mudanças em tempo real no documento de anotações.
  */
 export function listenForNotes(callback) {
@@ -137,6 +147,18 @@ export async function deleteUserFromDB(userId) {
 export async function getUsersForAuth() {
     const snapshot = await db.collection('users').get();
     return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}
+
+// Funcoes para REQUISICOES
+export async function saveRequestInDB(requestData) {
+    const docRef = await db.collection('requests').add(requestData);
+    return docRef.id;
+}
+export async function updateRequestInDB(requestId, data) {
+    await db.collection('requests').doc(requestId).update(data);
+}
+export async function deleteRequestFromDB(requestId) {
+    await db.collection('requests').doc(requestId).delete();
 }
 
 // Funções para ANOTAÇÕES

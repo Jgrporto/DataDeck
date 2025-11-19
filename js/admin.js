@@ -1,9 +1,10 @@
 import { checkAuth } from './auth.js';
-import { setupListeners, getScriptsForView, getTermsForView, getUsersForView, importScriptsLocally, importTermsLocally, importUsersLocally } from './state.js';
+import { setupListeners, getScriptsForView, getTermsForView, getUsersForView, getRequestsForView, importScriptsLocally, importTermsLocally, importUsersLocally } from './state.js';
 import { initAdminScriptsModule } from './modules/scripts.js';
 import { initAdminTermsModule } from './modules/terms.js';
 import { initAdminSettingsModule } from './modules/settings.js';
 import { initAdminUsersModule } from './modules/users.js';
+import { initAdminRequestsModule } from './modules/requests.js';
 
 checkAuth();
 
@@ -12,10 +13,12 @@ function updateStats() {
     const statsLocalScriptsEl = document.getElementById('stats-local-scripts');
     const statsTermsTotalEl = document.getElementById('stats-terms-total');
     const statsUsersTotalEl = document.getElementById('stats-users-total');
+    const requestsBadgeEl = document.getElementById('requests-badge');
 
     const allScripts = getScriptsForView();
     const allTerms = getTermsForView();
     const allUsers = getUsersForView();
+    const allRequests = getRequestsForView();
 
     const localScriptsCount = allScripts.filter(s => String(s.id).startsWith('local_')).length;
     const cloudScriptsCount = allScripts.length - localScriptsCount;
@@ -24,6 +27,7 @@ function updateStats() {
     if (statsLocalScriptsEl) statsLocalScriptsEl.textContent = localScriptsCount;
     if (statsTermsTotalEl) statsTermsTotalEl.textContent = allTerms.length;
     if (statsUsersTotalEl) statsUsersTotalEl.textContent = allUsers.length;
+    if (requestsBadgeEl) requestsBadgeEl.textContent = allRequests.filter(r => r.status === 'pending').length;
 }
 
 function setupLogout() {
@@ -91,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAdminTermsModule();
     initAdminSettingsModule();
     initAdminUsersModule();
+    initAdminRequestsModule();
     
     setupLogout();
     setupUniversalImporter();
@@ -98,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('scriptsUpdated', updateStats);
     document.addEventListener('termsUpdated', updateStats);
     document.addEventListener('usersUpdated', updateStats);
+    document.addEventListener('requestsUpdated', updateStats);
     
     setupListeners();
 });
