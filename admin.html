@@ -96,22 +96,10 @@
 
         <div id="requests-widget" class="dashboard-widget widget-table">
             <div class="widget-header">
-                <h2><i class="fas fa-inbox"></i> Requisições Pendentes</h2>
+                <h2><i class="fas fa-inbox"></i> Requisicoes Pendentes</h2>
                 <input type="search" id="admin-search-requests" placeholder="Filtrar... (autor ou status)">
             </div>
-            <div class="admin-table-wrapper">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Autor</th>
-                            <th>Data</th>
-                            <th>Itens</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="requests-table-body"></tbody>
-                </table>
-            </div>
+            <div class="requests-accordion" id="requests-accordion"></div>
         </div>
     </div>
 
@@ -308,3 +296,5 @@
 
 </body>
 </html>
+
+

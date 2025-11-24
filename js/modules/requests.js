@@ -1,47 +1,116 @@
 import { getRequestsForView, approveRequest } from '../state.js';
 
-function renderRequestsTable(list = getRequestsForView()) {
-    const tbody = document.getElementById('requests-table-body');
-    const badge = document.getElementById('requests-badge');
-    if (!tbody) return;
-    tbody.innerHTML = '';
+function buildItemsSection(title, items = [], key) {
+    const section = document.createElement('div');
+    section.className = 'request-section';
 
-    const pendingCount = list.filter(r => r.status === 'pending').length;
+    const heading = document.createElement('h4');
+    heading.textContent = `${title} (${items.length})`;
+    section.appendChild(heading);
+
+    const list = document.createElement('ul');
+    if (!items.length) {
+        const li = document.createElement('li');
+        li.textContent = 'Nenhum item';
+        list.appendChild(li);
+    } else {
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.textContent = item?.[key] || 'Sem titulo';
+            list.appendChild(li);
+        });
+    }
+
+    section.appendChild(list);
+    return section;
+}
+
+function renderRequestsAccordion(list = getRequestsForView()) {
+    const container = document.getElementById('requests-accordion');
+    const badge = document.getElementById('requests-badge');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const pendingCount = list.filter(r => (r.status || 'pending') === 'pending').length;
     if (badge) badge.textContent = pendingCount;
 
-    if (list.length === 0) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="4">Nenhuma requisição.</td>`;
-        tbody.appendChild(tr);
+    if (!list.length) {
+        const empty = document.createElement('div');
+        empty.className = 'request-empty';
+        empty.textContent = 'Nenhuma requisicao.';
+        container.appendChild(empty);
         return;
     }
 
     const sorted = [...list].sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+
     sorted.forEach(req => {
         const scriptsCount = req.scripts?.length || 0;
         const termsCount = req.terms?.length || 0;
         const toolsCount = req.tools?.length || 0;
         const statusLabel = req.status || 'pending';
 
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${req.createdBy || 'Desconhecido'}</td>
-            <td>${new Date(req.createdAt || Date.now()).toLocaleString()}</td>
-            <td>${scriptsCount} scripts / ${termsCount} termos / ${toolsCount} ferramentas</td>
-            <td class="actions-cell">
-                <span class="badge ${statusLabel}">${statusLabel}</span>
-                <button class="view-request-btn" title="Ver detalhes"><i class="fas fa-eye"></i></button>
-                <button class="approve-request-btn" title="Aprovar"><i class="fas fa-check"></i></button>
-            </td>
+        const card = document.createElement('div');
+        card.className = 'request-card';
+
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'request-toggle';
+        toggle.innerHTML = `
+            <div class="request-meta">
+                <span class="request-author">${req.createdBy || 'Desconhecido'}</span>
+                <span class="request-date">${new Date(req.createdAt || Date.now()).toLocaleString()}</span>
+            </div>
+            <div class="request-counts">
+                <span>${scriptsCount} scripts</span>
+                <span>${termsCount} termos</span>
+                <span>${toolsCount} ferramentas</span>
+            </div>
+            <div class="request-actions">
+                <span class="status-chip ${statusLabel}">${statusLabel}</span>
+                <i class="fas fa-chevron-down request-chevron"></i>
+            </div>
         `;
-        tr.querySelector('.view-request-btn').addEventListener('click', () => openRequestModal(req));
-        tr.querySelector('.approve-request-btn').addEventListener('click', async () => {
+
+        const body = document.createElement('div');
+        body.className = 'request-body';
+        body.appendChild(buildItemsSection('Scripts', req.scripts || [], 'title'));
+        body.appendChild(buildItemsSection('Termos', req.terms || [], 'title'));
+        body.appendChild(buildItemsSection('Ferramentas', req.tools || [], 'name'));
+
+        const footer = document.createElement('div');
+        footer.className = 'request-footer';
+
+        const viewBtn = document.createElement('button');
+        viewBtn.type = 'button';
+        viewBtn.className = 'btn btn-secondary btn-small';
+        viewBtn.textContent = 'Ver detalhes';
+        viewBtn.addEventListener('click', () => openRequestModal(req));
+
+        const approveBtn = document.createElement('button');
+        approveBtn.type = 'button';
+        approveBtn.className = 'btn btn-small';
+        approveBtn.textContent = 'Aprovar';
+        approveBtn.disabled = statusLabel !== 'pending';
+        approveBtn.addEventListener('click', async () => {
             if (req.status !== 'pending') return;
-            if (confirm('Aprovar e publicar itens desta requisição?')) {
+            if (confirm('Aprovar e publicar itens desta requisicao?')) {
                 await approveRequest(req);
             }
         });
-        tbody.appendChild(tr);
+
+        footer.appendChild(viewBtn);
+        footer.appendChild(approveBtn);
+        body.appendChild(footer);
+
+        toggle.addEventListener('click', () => {
+            card.classList.toggle('open');
+        });
+
+        card.appendChild(toggle);
+        card.appendChild(body);
+        container.appendChild(card);
     });
 }
 
@@ -67,7 +136,7 @@ function openRequestModal(req) {
         list.appendChild(header);
         section.items.forEach(item => {
             const li = document.createElement('li');
-            li.textContent = item[section.key] || 'Sem título';
+            li.textContent = item[section.key] || 'Sem titulo';
             list.appendChild(li);
         });
     });
@@ -76,7 +145,7 @@ function openRequestModal(req) {
         approveBtn.disabled = req.status !== 'pending';
         approveBtn.onclick = async () => {
             if (req.status !== 'pending') return;
-            if (confirm('Aprovar e publicar itens desta requisição?')) {
+            if (confirm('Aprovar e publicar itens desta requisicao?')) {
                 await approveRequest(req);
                 closeRequestModal();
             }
@@ -94,8 +163,8 @@ export function closeRequestModal() {
 export function initAdminRequestsModule() {
     if (!document.querySelector('.admin-dashboard')) return;
 
-    document.addEventListener('requestsUpdated', () => renderRequestsTable());
-    renderRequestsTable();
+    document.addEventListener('requestsUpdated', () => renderRequestsAccordion());
+    renderRequestsAccordion();
 
     const closeBtn = document.getElementById('close-request-modal-btn');
     if (closeBtn) closeBtn.addEventListener('click', closeRequestModal);
@@ -108,7 +177,7 @@ export function initAdminRequestsModule() {
                 (r.createdBy || '').toLowerCase().includes(term) ||
                 (r.status || '').toLowerCase().includes(term)
             );
-            renderRequestsTable(filtered);
+            renderRequestsAccordion(filtered);
         });
     }
 
@@ -119,7 +188,7 @@ export function initAdminRequestsModule() {
             if (pending) {
                 openRequestModal(pending);
             } else {
-                alert('Nenhuma requisição para revisar.');
+                alert('Nenhuma requisicao para revisar.');
             }
         });
     }

@@ -134,28 +134,33 @@ header.floating-header .profile-button img {
 
 /* --- ESTADO HOVER (Quando o mouse estÃ¡ sobre a NAV inteira) --- */
 
-.interactive-nav:hover .nav-link {
+.interactive-nav:hover .nav-link,
+.interactive-nav.nav-open .nav-link {
     width: 140px;
     border-radius: 30px;
     background-color: var(--cor-fundo);
 }
 
-.interactive-nav:hover .nav-link.active-link {
+.interactive-nav:hover .nav-link.active-link,
+.interactive-nav.nav-open .nav-link.active-link {
      background-color: var(--cor-destaque);
 }
 
-.interactive-nav:hover .nav-icon {
-    opacity: 0;
-    transform: translateY(-10px);
+.interactive-nav:hover .nav-icon,
+.interactive-nav.nav-open .nav-icon {
+    opacity: 1;
+    transform: none;
 }
 
-.interactive-nav:hover .nav-text {
+.interactive-nav:hover .nav-text,
+.interactive-nav.nav-open .nav-text {
     position: relative;
     transform: translateY(0);
     opacity: 1;
 }
 
-.interactive-nav:hover .nav-link.active-link .nav-text {
+.interactive-nav:hover .nav-link.active-link .nav-text,
+.interactive-nav.nav-open .nav-link.active-link .nav-text {
     color: white;
 }
 
@@ -163,8 +168,9 @@ header.floating-header .profile-button img {
     color: var(--cor-destaque);
 }
 
-.interactive-nav:hover .nav-link.active-link .nav-icon {
-    color: white; /* Cor do Ã­cone no estado ativo e hover (embora ele suma) */
+.interactive-nav:hover .nav-link.active-link .nav-icon,
+.interactive-nav.nav-open .nav-link.active-link .nav-icon {
+    color: white; /* Cor do icone no estado ativo e hover */
 }
 
 /* --- 3. COMPONENTES GERAIS REUTILIZÃVEIS --- */
@@ -1102,3 +1108,4 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+

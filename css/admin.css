@@ -264,10 +264,10 @@ body {
 
 /* CORREÇÃO: As colunas NÃO devem ter rolagem */
 .dashboard-main-col, .dashboard-side-col {
-    overflow-y: visible; /* Garante que não haja barra de rolagem aqui */
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 8px;
 }
-
-/* --- 5. Widgets (Cards de Conteúdo) --- */
 
 /* Estilo BASE para TODOS os widgets */
 .dashboard-widget {
@@ -507,3 +507,59 @@ input:checked + .slider:before {
 .slider.round:before {
     border-radius: 50%;
 }
+/* --- Requests accordion layout --- */
+.requests-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 20px 20px 20px;
+}
+.request-card {
+    border: 1px solid var(--cor-borda-sutil);
+    border-radius: 8px;
+    background-color: var(--cor-fundo-cartao);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+}
+.request-toggle {
+    width: 100%;
+    border: 0;
+    background: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    text-align: left;
+}
+.request-toggle:hover { background-color: rgba(0, 0, 0, 0.02); }
+.request-meta { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+.request-author { font-weight: 600; }
+.request-date { font-size: 12px; color: var(--cor-secundaria); }
+.request-counts { display: flex; gap: 10px; font-size: 12px; color: var(--cor-secundaria); flex-wrap: wrap; }
+.request-actions { display: flex; align-items: center; gap: 10px; }
+.status-chip {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    text-transform: capitalize;
+    border: 1px solid var(--cor-borda-sutil);
+}
+.status-chip.pending { background-color: rgba(243, 156, 18, 0.15); color: var(--status-local); border-color: rgba(243, 156, 18, 0.35); }
+.status-chip.approved { background-color: rgba(39, 174, 96, 0.15); color: var(--status-nuvem); border-color: rgba(39, 174, 96, 0.35); }
+.request-chevron { transition: transform 0.2s ease; color: var(--cor-secundaria); }
+.request-card.open .request-chevron { transform: rotate(180deg); }
+.request-body {
+    display: none;
+    padding: 0 16px 14px 16px;
+    border-top: 1px solid var(--cor-borda-sutil);
+    background-color: var(--cor-fundo-geral);
+}
+.request-card.open .request-body { display: block; }
+.request-section { margin-top: 12px; }
+.request-section h4 { margin: 0 0 6px 0; font-size: 13px; color: var(--cor-secundaria); }
+.request-section ul { margin: 0; padding-left: 18px; }
+.request-section li { font-size: 13px; line-height: 1.4; color: var(--cor-texto-escuro); }
+.request-footer { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
+.request-empty { padding: 16px 20px 24px; color: var(--cor-secundaria); text-align: center; }
